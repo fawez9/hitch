@@ -1,5 +1,5 @@
 export function buildQuery(filters: Filters): string {
-  const { language, labels, updatedAt, page } = filters;
+  const { language, labels, updatedAt } = filters;
   let query = 'is:issue is:open';
   if (language) {
     query += ` language:${language}`;
