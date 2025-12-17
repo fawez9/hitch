@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildQuery } from '../../../packages/core/src/issues/buildQuery';
+import { buildQuery } from '../../../packages/core/src/issues/queryBuilder';
 
 describe('buildQuery', () => {
   it('should build basic query with only required filters', () => {
