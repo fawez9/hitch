@@ -9,10 +9,7 @@
  *
  * @throws Throws an error if GitHub API responds with a non-OK status
  */
-
-import { issueMapper } from './mapper';
-import { buildQuery } from './queryBuilder';
-import { Filters, GitHubIssueItem, Issue } from './types';
+import { buildQuery, Filters, GitHubIssueItem, Issue, issueMapper } from '.';
 
 export async function searchIssues(filters: Filters) {
   const query = buildQuery(filters);

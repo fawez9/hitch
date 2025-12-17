@@ -5,7 +5,7 @@
  * @returns Array of Issue
  */
 
-import { GitHubIssueItem, Issue } from './types';
+import { GitHubIssueItem, Issue } from '.';
 
 export function issueMapper(items: GitHubIssueItem[]): Issue[] {
   return (

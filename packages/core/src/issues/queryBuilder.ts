@@ -5,7 +5,7 @@
  * @param filters Filters object containing optional language, labels, updatedAt, and page number
  * @returns A string ready to be used as GitHub search query
  */
-import { Filters } from './types';
+import { Filters } from '.';
 
 export function buildQuery(filters: Filters): string {
   const { language, labels, updatedAt } = filters;
