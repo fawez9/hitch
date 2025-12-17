@@ -35,7 +35,7 @@ export interface GitHubIssueItem {
     owner: { login: string };
     html_url: string;
     language?: string;
-  };
+  } | null;
   created_at: string;
   updated_at: string;
 }
