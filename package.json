@@ -13,7 +13,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:integration": "vitest run ./tests/core/issues/search.integration.test.ts",
+    "test:unit": "vitest run ./tests/core/issues/*.test.ts --exclude ./tests/core/issues/*.integration.test.ts",
+    "test:integrations": "vitest run ./tests/core/issues/*.integration.test.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

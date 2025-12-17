@@ -1,3 +1,10 @@
+/**
+ * Builds a GitHub search query string from provided filters.
+ * Ensures "is:issue is:open" is always included.
+ *
+ * @param filters Filters object containing optional language, labels, updatedAt, and page number
+ * @returns A string ready to be used as GitHub search query
+ */
 import { Filters } from './types';
 
 export function buildQuery(filters: Filters): string {

@@ -1,3 +1,16 @@
+/**
+ * Fetches GitHub issues based on provided filters.
+ * Uses the GitHub Search API and maps results to the internal Issue type.
+ *
+ * @param filters Filters object containing optional language, labels, updatedAt, and page number
+ * @returns An object containing:
+ *   - issues: Array of Issue objects (id, title, repository, labels, etc.)
+ *   - pagination: Object with page, per_page, total, and hasNext boolean
+ *
+ * @throws Throws an error if GitHub API responds with a non-OK status
+ */
+
+import { issueMapper } from './mapper';
 import { buildQuery } from './queryBuilder';
 import { Filters, GitHubIssueItem, Issue } from './types';
 
@@ -29,25 +42,7 @@ export async function searchIssues(filters: Filters) {
 
   const data: { items: GitHubIssueItem[]; total_count: number } = await response.json();
 
-  const issues: Issue[] = data.items
-    // NOTE: Some search results may not include repository data (edge cases / API inconsistencies),so we defensively filter them out.
-    .filter((item) => item.repository)
-    .map((item) => ({
-      id: item.id.toString(),
-      title: item.title,
-      url: item.html_url,
-      repository: {
-        name: item.repository.name,
-        owner: item.repository.owner.login,
-        url: item.repository.html_url,
-      },
-      labels: item.labels.map((label) => label.name),
-      language: item.repository.language,
-      createdAt: item.created_at,
-      updatedAt: item.updated_at,
-      difficulty: 'Beginner',
-    }));
-
+  const issues: Issue[] = issueMapper(data.items);
   return {
     issues,
     pagination: {
