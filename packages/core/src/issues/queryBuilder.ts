@@ -1,3 +1,5 @@
+import { Filters } from './types';
+
 export function buildQuery(filters: Filters): string {
   const { language, labels, updatedAt } = filters;
   let query = 'is:issue is:open';
