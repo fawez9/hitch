@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+/tests/core/issues/search.integration.test.ts
 
 # production
 /build
