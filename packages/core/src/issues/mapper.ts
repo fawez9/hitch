@@ -7,7 +7,7 @@
 
 import { GitHubIssueItem, Issue } from '.';
 
-export function issueMapper(items: GitHubIssueItem[]): Issue[] {
+export function issuesMapper(items: GitHubIssueItem[]): Issue[] {
   return (
     // NOTE: GitHub API sometimes returns null for repository, filter those out
     items
@@ -20,9 +20,9 @@ export function issueMapper(items: GitHubIssueItem[]): Issue[] {
           name: item.repository.name,
           owner: item.repository.owner.login,
           url: item.repository.html_url,
+          language: item.repository.language ?? 'unknown',
         },
         labels: item.labels.map((label) => label.name),
-        language: item.repository.language,
         createdAt: item.created_at,
         updatedAt: item.updated_at,
         difficulty: 'Beginner',

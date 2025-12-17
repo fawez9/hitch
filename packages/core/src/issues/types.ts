@@ -2,6 +2,7 @@ export interface Repository {
   name: string;
   owner: string;
   url: string;
+  language?: string;
 }
 
 export interface Issue {
@@ -10,7 +11,6 @@ export interface Issue {
   body?: string;
   url: string;
   repository: Repository;
-  language?: string;
   labels: string[];
   createdAt: string;
   updatedAt: string;

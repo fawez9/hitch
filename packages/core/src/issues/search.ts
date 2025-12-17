@@ -9,7 +9,7 @@
  *
  * @throws Throws an error if GitHub API responds with a non-OK status
  */
-import { buildQuery, Filters, GitHubIssueItem, Issue, issueMapper } from '.';
+import { buildQuery, Filters, GitHubIssueItem, Issue, issuesMapper } from '.';
 
 export async function searchIssues(filters: Filters) {
   const query = buildQuery(filters);
@@ -39,7 +39,7 @@ export async function searchIssues(filters: Filters) {
 
   const data: { items: GitHubIssueItem[]; total_count: number } = await response.json();
 
-  const issues: Issue[] = issueMapper(data.items);
+  const issues: Issue[] = issuesMapper(data.items);
   return {
     issues,
     pagination: {
