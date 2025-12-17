@@ -3,7 +3,7 @@ import { searchIssues } from '../../../packages/core/src/issues/search';
 import type { GitHubIssueItem } from '../../../packages/core/src/issues/types';
 
 const mockFetch = vi.fn();
-global.fetch = mockFetch as any;
+vi.stubGlobal('fetch', mockFetch);
 
 beforeEach(() => {
   mockFetch.mockReset();
