@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { searchIssues } from '../../../packages/core/src/issues/search';
-import type { GitHubIssueItem } from '../../../packages/core/src/issues/types';
+import { ErrorMessages, GitHubIssueItem, searchIssues } from '@hitch/core';
 
 const mockFetch = vi.fn();
 vi.stubGlobal('fetch', mockFetch);
@@ -67,6 +66,6 @@ describe('searchIssues (unit)', () => {
       text: async () => 'Bad credentials',
     });
 
-    await expect(searchIssues({ page: 1 })).rejects.toThrow('GitHub API Error');
+    await expect(searchIssues({ page: 1 })).rejects.toThrow(ErrorMessages.GitHubAPIError);
   });
 });
