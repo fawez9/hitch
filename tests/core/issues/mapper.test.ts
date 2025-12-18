@@ -10,16 +10,12 @@ describe('issuesMapper', () => {
         body: 'Some body',
         html_url: 'https://github.com/test/repo/issues/1',
         labels: [{ name: 'good first issue' }],
-        repository: {
-          name: 'repo',
-          owner: { login: 'octocat' },
-          html_url: 'https://github.com/test/repo',
-          language: 'TypeScript',
-        },
+        repository_url: 'https://api.github.com/test/repo',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-02T00:00:00Z',
       },
     ];
+
     const result = issuesMapper(input);
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
@@ -28,9 +24,9 @@ describe('issuesMapper', () => {
       url: 'https://github.com/test/repo/issues/1',
       repository: {
         name: 'repo',
-        owner: 'octocat',
+        owner: 'test',
         url: 'https://github.com/test/repo',
-        language: 'TypeScript',
+        language: 'unknown',
       },
       labels: ['good first issue'],
       createdAt: '2024-01-01T00:00:00Z',
@@ -38,6 +34,7 @@ describe('issuesMapper', () => {
       difficulty: 'Beginner',
     });
   });
+
   it('filters out items without repository', () => {
     const input: GitHubIssueItem[] = [
       {
@@ -45,16 +42,16 @@ describe('issuesMapper', () => {
         title: 'No repo',
         html_url: 'https://github.com/issues/1',
         labels: [],
-        repository: null, // simulate API edge case
+        repository_url: '',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
       },
     ];
 
     const result = issuesMapper(input);
-
     expect(result).toHaveLength(0);
   });
+
   it('handles missing language safely', () => {
     const input: GitHubIssueItem[] = [
       {
@@ -62,19 +59,13 @@ describe('issuesMapper', () => {
         title: 'No language',
         html_url: 'https://github.com/test/repo/issues/2',
         labels: [],
-        repository: {
-          name: 'repo',
-          owner: { login: 'octocat' },
-          html_url: 'https://github.com/test/repo',
-          language: undefined,
-        },
+        repository_url: 'https://api.github.com/repos/test/repo',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
       },
     ];
 
     const result = issuesMapper(input);
-
     expect(result[0].repository.language).toBe('unknown');
   });
 });

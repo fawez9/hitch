@@ -9,9 +9,17 @@
  *
  * @throws Throws an error if GitHub API responds with a non-OK status
  */
-import { buildQuery, ErrorMessages, Filters, GitHubIssueItem, Issue, issuesMapper } from '.';
+import {
+  buildQuery,
+  ErrorMessages,
+  Filters,
+  GitHubIssueItem,
+  Issue,
+  issuesMapper,
+  SearchIssuesResult,
+} from '.';
 
-export async function searchIssues(filters: Filters) {
+export async function searchIssues(filters: Filters): Promise<SearchIssuesResult> {
   const query = buildQuery(filters);
   const url = new URL('https://api.github.com/search/issues');
   url.searchParams.append('q', query);
@@ -40,7 +48,7 @@ export async function searchIssues(filters: Filters) {
   }
 
   const data: { items: GitHubIssueItem[]; total_count: number } = await response.json();
-
+  console.log('First item from API:', JSON.stringify(data.items[0], null, 2));
   const issues: Issue[] = issuesMapper(data.items);
   return {
     issues,

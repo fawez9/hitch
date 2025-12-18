@@ -1,8 +1,20 @@
+export interface Filters {
+  language?: string;
+  labels?: string[];
+  updatedAt?: string;
+  page?: number;
+}
 export interface Repository {
   name: string;
   owner: string;
   url: string;
   language?: string;
+}
+export interface Pagination {
+  page: number;
+  per_page: number;
+  total: number;
+  hasNext: boolean;
 }
 
 export interface Issue {
@@ -17,25 +29,18 @@ export interface Issue {
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
 }
 
-export interface Filters {
-  language?: string;
-  labels?: string[];
-  updatedAt?: string;
-  page?: number;
-}
-
 export interface GitHubIssueItem {
   id: number;
   title: string;
   body?: string;
   labels: { name: string }[];
   html_url: string;
-  repository: {
-    name: string;
-    owner: { login: string };
-    html_url: string;
-    language?: string;
-  } | null;
+  repository_url: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface SearchIssuesResult {
+  issues: Issue[];
+  pagination: Pagination;
 }

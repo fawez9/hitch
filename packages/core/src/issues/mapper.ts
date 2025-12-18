@@ -6,31 +6,40 @@
  * @function hasRepository This tells TypeScript:“After this check, repository is guaranteed to exist.”
  */
 
-import { GitHubIssueItem, Issue } from '.';
+import { ErrorMessages, GitHubIssueItem, Issue } from '.';
 
-function hasRepository(item: GitHubIssueItem): item is GitHubIssueItem & {
-  repository: NonNullable<GitHubIssueItem['repository']>;
-} {
-  return item.repository === null;
+function extractRepoFromUrl(url: string): { owner: string; name: string } | null {
+  const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+  if (!match) return null;
+  return { owner: match[1], name: match[2] };
+}
+
+function hasRepository(item: GitHubIssueItem): boolean {
+  return !!item.repository_url && extractRepoFromUrl(item.repository_url) !== null;
 }
 
 export function issuesMapper(items: GitHubIssueItem[]): Issue[] {
-  return (
-    // NOTE: GitHub API sometimes returns null for repository, filter those out
-    items.filter(hasRepository).map((item) => ({
+  return items.filter(hasRepository).map((item) => {
+    const repoInfo = extractRepoFromUrl(item.repository_url);
+
+    if (!repoInfo) {
+      throw new Error(`${ErrorMessages.RepoInfoExtractFailed}: ${item.repository_url}`);
+    }
+
+    return {
       id: item.id.toString(),
       title: item.title,
       url: item.html_url,
       repository: {
-        name: item.repository.name,
-        owner: item.repository.owner.login,
-        url: item.repository.html_url,
-        language: item.repository.language ?? 'unknown',
+        name: repoInfo.name,
+        owner: repoInfo.owner,
+        url: `https://github.com/${repoInfo.owner}/${repoInfo.name}`,
+        language: 'unknown', //NOTE: Search API doesn't provide language info
       },
       labels: item.labels.map((label) => label.name),
       createdAt: item.created_at,
       updatedAt: item.updated_at,
       difficulty: 'Beginner',
-    }))
-  );
+    };
+  });
 }

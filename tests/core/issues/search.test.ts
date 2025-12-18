@@ -14,12 +14,7 @@ const mockGitHubItems: GitHubIssueItem[] = [
     title: 'Test issue',
     html_url: 'https://github.com/test/repo/issues/1',
     labels: [{ name: 'bug' }],
-    repository: {
-      name: 'repo',
-      owner: { login: 'test' },
-      html_url: 'https://github.com/test/repo',
-      language: 'TypeScript',
-    },
+    repository_url: 'https://github.com/test/repo',
     created_at: '2024-01-01T00:00:00Z',
     updated_at: '2024-01-02T00:00:00Z',
   },
