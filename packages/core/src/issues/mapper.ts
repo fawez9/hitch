@@ -11,7 +11,7 @@ import { GitHubIssueItem, Issue } from '.';
 function hasRepository(item: GitHubIssueItem): item is GitHubIssueItem & {
   repository: NonNullable<GitHubIssueItem['repository']>;
 } {
-  return item.repository !== null;
+  return item.repository === null;
 }
 
 export function issuesMapper(items: GitHubIssueItem[]): Issue[] {
