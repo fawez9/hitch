@@ -2,4 +2,4 @@ export * from './search';
 export * from './queryBuilder';
 export * from './mapper';
 export * from './types';
-export * from './errors';
+export * from '../lib/errors';
