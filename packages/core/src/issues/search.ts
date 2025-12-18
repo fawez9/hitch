@@ -9,7 +9,7 @@
  *
  * @throws Throws an error if GitHub API responds with a non-OK status
  */
-import { buildQuery, Filters, GitHubIssueItem, Issue, issuesMapper } from '.';
+import { buildQuery, ErrorMessages, Filters, GitHubIssueItem, Issue, issuesMapper } from '.';
 
 export async function searchIssues(filters: Filters) {
   const query = buildQuery(filters);
@@ -27,14 +27,16 @@ export async function searchIssues(filters: Filters) {
 
   if (!response.ok) {
     const errorBody = await response.text();
-    console.error('GitHub API Error:', {
+    console.error(ErrorMessages.GitHubFetchFailed, {
       status: response.status,
       statusText: response.statusText,
       body: errorBody,
       url: url.toString(),
       query: query,
     });
-    throw new Error(`GitHub API Error: ${response.status} ${response.statusText} - ${errorBody}`);
+    throw new Error(
+      `${ErrorMessages.GitHubAPIError} ${response.status} ${response.statusText} - ${errorBody}`,
+    );
   }
 
   const data: { items: GitHubIssueItem[]; total_count: number } = await response.json();
