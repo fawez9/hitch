@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { GitHubIssueItem, issuesMapper } from '@hitch/core';
+import { issuesMapper } from '../../../packages/core/src/issues/mapper';
+import { GitHubIssueItem } from '../../../packages/core/src/issues/types';
 
 describe('issuesMapper', () => {
   it('maps GitHubIssueItem[] to Issues[] correctly', () => {
@@ -7,16 +8,16 @@ describe('issuesMapper', () => {
       {
         id: 123,
         title: 'Test issue',
-        body: 'Some body',
         html_url: 'https://github.com/test/repo/issues/1',
         labels: [{ name: 'good first issue' }],
-        repository_url: 'https://api.github.com/test/repo',
+        repository_url: 'https://api.github.com/repos/test/repo',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-02T00:00:00Z',
       },
     ];
 
     const result = issuesMapper(input);
+
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
       id: '123',
@@ -26,7 +27,7 @@ describe('issuesMapper', () => {
         name: 'repo',
         owner: 'test',
         url: 'https://github.com/test/repo',
-        language: 'unknown',
+        language: null,
       },
       labels: ['good first issue'],
       createdAt: '2024-01-01T00:00:00Z',
@@ -35,7 +36,7 @@ describe('issuesMapper', () => {
     });
   });
 
-  it('filters out items without repository', () => {
+  it('filters out items without repository_url', () => {
     const input: GitHubIssueItem[] = [
       {
         id: 1,
@@ -49,10 +50,11 @@ describe('issuesMapper', () => {
     ];
 
     const result = issuesMapper(input);
+
     expect(result).toHaveLength(0);
   });
 
-  it('handles missing language safely', () => {
+  it('handles language as null', () => {
     const input: GitHubIssueItem[] = [
       {
         id: 2,
@@ -66,6 +68,7 @@ describe('issuesMapper', () => {
     ];
 
     const result = issuesMapper(input);
-    expect(result[0].repository.language).toBe('unknown');
+
+    expect(result[0].repository.language).toBe(null);
   });
 });

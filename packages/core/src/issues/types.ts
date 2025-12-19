@@ -8,7 +8,7 @@ export interface Repository {
   name: string;
   owner: string;
   url: string;
-  language?: string;
+  language?: string | null;
 }
 export interface Pagination {
   page: number;
@@ -33,7 +33,7 @@ export interface GitHubIssueItem {
   id: number;
   title: string;
   body?: string;
-  labels: { name: string }[];
+  labels: Array<{ name: string }>;
   html_url: string;
   repository_url: string;
   created_at: string;

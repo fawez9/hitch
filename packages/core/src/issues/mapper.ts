@@ -3,13 +3,12 @@
  * Filters out items without repository info.
  * @param items Array of GitHubIssueItem from GitHub API
  * @returns Array of Issue
- * @function hasRepository This tells TypeScript:“After this check, repository is guaranteed to exist.”
  */
-
 import { ErrorMessages, GitHubIssueItem, Issue } from '.';
 
 function extractRepoFromUrl(url: string): { owner: string; name: string } | null {
-  const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+  // NOTE: Parse repository_url like: https://api.github.com/repos/microsoft/TypeScript
+  const match = url.match(/repos\/([^\/]+)\/([^\/]+)/);
   if (!match) return null;
   return { owner: match[1], name: match[2] };
 }
@@ -34,7 +33,7 @@ export function issuesMapper(items: GitHubIssueItem[]): Issue[] {
         name: repoInfo.name,
         owner: repoInfo.owner,
         url: `https://github.com/${repoInfo.owner}/${repoInfo.name}`,
-        language: 'unknown', //NOTE: Search API doesn't provide language info
+        language: null, // Language is on the item, not nested
       },
       labels: item.labels.map((label) => label.name),
       createdAt: item.created_at,

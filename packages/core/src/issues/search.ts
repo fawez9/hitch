@@ -48,7 +48,6 @@ export async function searchIssues(filters: Filters): Promise<SearchIssuesResult
   }
 
   const data: { items: GitHubIssueItem[]; total_count: number } = await response.json();
-  console.log('First item from API:', JSON.stringify(data.items[0], null, 2));
   const issues: Issue[] = issuesMapper(data.items);
   return {
     issues,
