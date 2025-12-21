@@ -1,5 +1,5 @@
 export interface Filters {
-  language?: string;
+  language?: string | null;
   labels?: string[];
   updatedAt?: string;
   page?: number;
@@ -38,6 +38,7 @@ export interface GitHubIssueItem {
   repository_url: string;
   created_at: string;
   updated_at: string;
+  comments: number;
 }
 
 export interface SearchIssuesResult {
