@@ -8,7 +8,6 @@ export default function Home() {
   const { issues, loading, error, search } = useIssueSearch();
   const searchParams = useSearchParams();
 
-  // 1️⃣ Build filters FROM THE URL
   const language = searchParams.get('language') || undefined;
   const labelsParam = searchParams.get('labels');
   const pageParam = searchParams.get('page');
