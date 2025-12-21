@@ -13,10 +13,10 @@ export function useIssueSearch() {
 
       const params = new URLSearchParams();
 
-      if (filters.language) params.set('language', filters.language);
-      if (filters.page) params.set('page', String(filters.page));
       if (filters.labels) params.set('labels', filters.labels.join(','));
+      if (filters.language) params.set('language', filters.language);
       if (filters.updatedAt) params.set('updatedAt', filters.updatedAt);
+      if (filters.page) params.set('page', String(filters.page));
 
       const res = await fetch(`/api/v1/issues?${params.toString()}`);
 
