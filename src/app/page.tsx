@@ -1,107 +1,69 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { GitMerge, Terminal, AlertCircle, Loader2, Search } from 'lucide-react';
-import { IssueCard, Issue, IssueLabel } from '@/components/IssueCard';
-import { FilterPanel } from '@/components/FilterPanel';
+
+import { useEffect, useState } from 'react';
+import { Loader2, AlertCircle, Search } from 'lucide-react';
+import { IssueCard } from '@/components/IssueCard';
 import { Header } from '@/components/Header';
-// Mock Data
-const MOCK_ISSUES: Issue[] = [
-  {
-    id: '1',
-    title: 'Fix authentication flow for OAuth providers',
-    repo: 'example/project',
-    language: 'TypeScript',
-    labels: ['bug', 'good first issue'],
-    comments: 5,
-    createdAt: 'almost 2 years ago',
-    url: '#',
-  },
-  {
-    id: '2',
-    title: 'Add dark mode support to dashboard',
-    repo: 'awesome/app',
-    language: 'JavaScript',
-    labels: ['enhancement', 'help wanted'],
-    comments: 12,
-    createdAt: 'almost 2 years ago',
-    url: '#',
-  },
-  {
-    id: '3',
-    title: 'Improve documentation for API endpoints',
-    repo: 'open/source',
-    language: 'Python',
-    labels: ['documentation'],
-    comments: 3,
-    createdAt: 'almost 2 years ago',
-    url: '#',
-  },
-  {
-    id: '4',
-    title: 'Memory leak in event listener cleanup',
-    repo: 'react/library',
-    language: 'TypeScript',
-    labels: ['bug'],
-    comments: 8,
-    createdAt: 'almost 2 years ago',
-    url: '#',
-  },
-  {
-    id: '5',
-    title: 'Implement Rust bindings for core logic',
-    repo: 'system/core',
-    language: 'Rust',
-    labels: ['enhancement', 'help wanted'],
-    comments: 15,
-    createdAt: '3 days ago',
-    url: '#',
-  },
-  {
-    id: '6',
-    title: 'Update dependencies to latest versions',
-    repo: 'web/frontend',
-    language: 'JavaScript',
-    labels: ['good first issue'],
-    comments: 1,
-    createdAt: '1 week ago',
-    url: '#',
-  },
-];
+import { FilterPanel } from '@/components/FilterPanel';
+import { useIssueSearch } from '@/hooks/useIssueSearch';
+import { useSearchParams } from 'next/navigation';
+import { Filters } from '@hitch/core';
+
+type IssueLabel = string;
+
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedLabel, setSelectedLabel] = useState<IssueLabel | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState('All Languages');
   const [searchQuery, setSearchQuery] = useState('');
-  const [issues, setIssues] = useState<Issue[]>([]);
-  // Simulate loading
+  const { issues, loading, error, search } = useIssueSearch();
+  const searchParams = useSearchParams();
+
+  const language = searchParams.get('language') || undefined;
+  const labelsParam = searchParams.get('labels');
+  const updatedAt = searchParams.get('updatedAt') || undefined;
+  const pageParam = searchParams.get('page');
+
+  const filters: Filters = {
+    language,
+    labels: labelsParam ? labelsParam.split(',') : undefined,
+    updatedAt,
+    page: pageParam ? Number(pageParam) : 1,
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIssues(MOCK_ISSUES);
-      setLoading(false);
-    }, 1500);
+      search(filters);
+    }, 1000);
     return () => clearTimeout(timer);
-  }, []);
-  // Filter logic
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  // Client-side filtering (only label and search, not language)
   const filteredIssues = issues.filter((issue) => {
     const matchesLabel = selectedLabel ? issue.labels.includes(selectedLabel) : true;
-    const matchesLanguage =
-      selectedLanguage !== 'All Languages' ? issue.language === selectedLanguage : true;
+
     const matchesSearch =
       issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      issue.repo.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesLabel && matchesLanguage && matchesSearch;
+      issue.repository.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesLanguage =
+      selectedLanguage === 'All Languages'
+        ? true
+        : issue.repository.language?.toLowerCase() === selectedLanguage.toLowerCase();
+
+    return matchesLabel && matchesSearch && matchesLanguage;
   });
+
   const handleClear = () => {
     setSelectedLabel(null);
     setSelectedLanguage('All Languages');
     setSearchQuery('');
   };
+
   return (
     <div className="min-h-screen bg-[#0f172a]">
       <Header />
       <div className="max-w-5xl mx-auto space-y-8 pt-10">
-        {/* Main Content */}
         <main className="space-y-8">
           <FilterPanel
             selectedLabel={selectedLabel}
@@ -113,7 +75,6 @@ export default function Home() {
             onClear={handleClear}
           />
 
-          {/* Results Section */}
           <div className="space-y-4">
             <div className="flex items-center justify-between text-sm text-slate-400 px-1">
               <span>
