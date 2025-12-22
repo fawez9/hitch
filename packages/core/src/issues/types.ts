@@ -24,6 +24,7 @@ export interface Issue {
   url: string;
   repository: Repository;
   labels: string[];
+  comments?: number;
   createdAt: string;
   updatedAt: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
