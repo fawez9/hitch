@@ -38,6 +38,10 @@ export function FilterPanel({
 
     router.push(`/?${params.toString()}`);
   };
+  const handleClear = () => {
+    onClear();
+    router.replace('/');
+  };
 
   return (
     <div className="bg-[#1e293b] rounded-2xl border border-slate-700/50 p-6 shadow-xl shadow-black/20">
@@ -118,7 +122,7 @@ export function FilterPanel({
           <div className="flex gap-2">
             {(selectedLabel || selectedLanguage !== 'All Languages' || searchQuery) && (
               <button
-                onClick={onClear}
+                onClick={handleClear}
                 className="flex items-center gap-2 px-4 py-3 rounded-lg border border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
               >
                 <X size={18} />
