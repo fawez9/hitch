@@ -39,7 +39,7 @@ export function IssueCard({ issue }: IssueCardProps) {
         {/* Header: Title and Repo */}
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <GoIssueOpened className="size-6 text-slate-100 group-hover:text-cyan-400 transition-colors" />
+            <GoIssueOpened className="size-6 text-slate-100 group-hover:text-green-500 transition-colors" />
             <a
               href={issue.url}
               target="_blank"
@@ -98,7 +98,7 @@ export function IssueCard({ issue }: IssueCardProps) {
           </div>
 
           <div className="flex items-center gap-4 text-slate-500 text-sm">
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400">
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity text-green-500">
               <GitPullRequest size={16} />
             </div>
           </div>
