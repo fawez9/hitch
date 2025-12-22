@@ -59,7 +59,7 @@ export function issuesMapper(items: GitHubIssueItem[]): Issue[] {
       },
       labels: item.labels.map((label) => label.name),
       createdAt: formatOpenedAt(item.created_at),
-      updatedAt: formatOpenedAt(item.updated_at),
+      updatedAt: item.updated_at, //TODO: check if u need the same function for updatedAt
       difficulty: 'Beginner',
     };
   });
