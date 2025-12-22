@@ -11,6 +11,7 @@ describe('issuesMapper', () => {
         html_url: 'https://github.com/test/repo/issues/1',
         labels: [{ name: 'good first issue' }],
         repository_url: 'https://api.github.com/repos/test/repo',
+        comments: 0,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-02T00:00:00Z',
       },
@@ -30,7 +31,7 @@ describe('issuesMapper', () => {
         language: null,
       },
       labels: ['good first issue'],
-      createdAt: '2024-01-01T00:00:00Z',
+      createdAt: 'opened 2y ago',
       updatedAt: '2024-01-02T00:00:00Z',
       difficulty: 'Beginner',
     });
@@ -44,7 +45,8 @@ describe('issuesMapper', () => {
         html_url: 'https://github.com/issues/1',
         labels: [],
         repository_url: '',
-        created_at: '2024-01-01T00:00:00Z',
+        comments: 0,
+        created_at: 'opened 2y ago',
         updated_at: '2024-01-01T00:00:00Z',
       },
     ];
@@ -62,7 +64,8 @@ describe('issuesMapper', () => {
         html_url: 'https://github.com/test/repo/issues/2',
         labels: [],
         repository_url: 'https://api.github.com/repos/test/repo',
-        created_at: '2024-01-01T00:00:00Z',
+        comments: 0,
+        created_at: 'opened 2y ago',
         updated_at: '2024-01-01T00:00:00Z',
       },
     ];
