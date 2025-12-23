@@ -6,7 +6,7 @@ Hitch is a developer tool that simplifies finding and contributing to GitHub iss
 
 [![CI](https://github.com/fawez9/hitch/actions/workflows/ci.yml/badge.svg)](https://github.com/fawez9/hitch/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-🚀 **[Live Demo](https://hitch.vercel.app)** | 📖 **[Documentation](https://github.com/fawez9/hitch/wiki)**
+🚀 **[Live Demo](https://hitch-owdnv92s7-fawezs-projects.vercel.app)** | 📖 **[Documentation](https://github.com/fawez9/hitch/wiki)**
 
 ## 🎉 Version 1.0 - Now Live!
 
