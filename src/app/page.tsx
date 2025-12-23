@@ -9,8 +9,11 @@ import { useIssueSearch } from '@/hooks/useIssueSearch';
 import { useSearchParams } from 'next/navigation';
 import { Filters } from '@hitch/core';
 import { Pagination } from '@/components/Pagination';
+import { IssueLabel } from '@/ui/filterView';
 
-type IssueLabel = string;
+//NOTE: dynamic = 'force-dynamic' tells Next.js: always render on the client, skip static prerendering.
+// This is perfect for pages using useSearchParams + useEffect + dynamic hooks.
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   const [selectedLabels, setSelectedLabels] = useState<IssueLabel[]>([]);
