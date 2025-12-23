@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3. Install dependencies (monorepo-safe)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. TypeScript type checking
+      - name: Type check
+        run: npm run typecheck
+
+      # 5. Linting
+      - name: Lint
+        run: npm run lint
+
+      # 6. Unit tests (core, components, hooks, lib, routes)
+      - name: Run unit tests
+        run: |
+          npm run test:units-core
+          npm run test:units-components
+          npm run test:units-hooks
+          npm run test:units-lib
+          npm run test:units-routes
+
+      # 7. Integration tests
+      - name: Run integration tests
+        run: npm run test:integrations
+
+      # 8. Build (ensures deployability)
+      - name: Build
+        run: npm run build
