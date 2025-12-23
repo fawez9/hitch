@@ -4,9 +4,11 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
+  const labelsParam = searchParams.get('labels');
+
   const filters: Filters = {
     language: searchParams.get('language') ?? undefined,
-    labels: searchParams.getAll('labels'),
+    labels: labelsParam ? labelsParam.split(',') : undefined, //split by comma
     page: Number(searchParams.get('page') ?? 1),
   };
 
