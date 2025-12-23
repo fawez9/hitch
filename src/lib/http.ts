@@ -18,15 +18,22 @@ export async function http<T>(url: string, options: HttpOptions = {}): Promise<T
       },
       body: body ? JSON.stringify(body) : undefined,
     });
+
     if (!response.ok) {
       throw new Error(`${ErrorMessages.HttpError} (${response.status})`);
     }
 
     return response.json();
   } catch (error: unknown) {
+    // NOTE: Preserve HttpError
     if (error instanceof Error) {
+      if (error.message.startsWith(ErrorMessages.HttpError)) {
+        throw error;
+      }
+
       console.error(ErrorMessages.NetworkError, error.message);
     }
+
     throw new Error(ErrorMessages.NetworkError);
   }
 }
