@@ -16,7 +16,8 @@
     "test:units": "vitest run ./tests/core/issues/*.test.ts --exclude ./tests/core/issues/*.integration.test.ts",
     "test:integrations": "vitest run ./tests/core/issues/*.integration.test.ts",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "lucide-react": "^0.562.0",
