@@ -1,7 +1,7 @@
 import { searchIssues } from '@hitch/core';
 import { describe, it, expect } from 'vitest';
 
-const hasToken = !!process.env.GITHUB_TOKEN;
+const hasToken = !!process.env.SECRET_TOKEN;
 
 describe('searchIssues (integration)', () => {
   it.skipIf(!hasToken)('fetches issues from GitHub', async () => {

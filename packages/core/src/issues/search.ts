@@ -33,8 +33,8 @@ async function fetchRepoLanguage(owner: string, name: string): Promise<string | 
       Accept: 'application/vnd.github+json',
     };
 
-    if (process.env.GITHUB_TOKEN) {
-      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    if (process.env.SECRET_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.SECRET_TOKEN}`;
     }
 
     const response = await fetch(url.toString(), {
@@ -69,8 +69,8 @@ export async function searchIssues(filters: Filters): Promise<SearchIssuesResult
     Accept: 'application/vnd.github+json',
   };
 
-  if (process.env.GITHUB_TOKEN) {
-    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  if (process.env.SECRET_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.SECRET_TOKEN}`;
   }
 
   const response = await fetch(url.toString(), { headers });

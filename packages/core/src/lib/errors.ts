@@ -1,6 +1,6 @@
 export const ErrorMessages = {
   // GitHub API errors
-  GitHubTokenMissing: 'GitHub token is missing. Please set GITHUB_TOKEN in your environment.',
+  GitHubTokenMissing: 'GitHub token is missing. Please set SECRET_TOKEN in your environment.',
   GitHubAPIError: 'GitHub API returned an error. Check token and rate limits.',
   GitHubFetchFailed: 'Failed to fetch data from GitHub.',
 
