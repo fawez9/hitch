@@ -1,3 +1,4 @@
+'use client';
 import { GitPullRequest, Terminal } from 'lucide-react';
 
 export function Header() {
