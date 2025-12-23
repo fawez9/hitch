@@ -1,7 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GET } from '@/app/api/v1/issues/route';
 import * as core from '@hitch/core';
-import { NextResponse } from 'next/server';
 
 vi.mock('@hitch/core');
 
