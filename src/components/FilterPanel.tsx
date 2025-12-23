@@ -5,8 +5,8 @@ import { Search, X } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export function FilterPanel({
-  selectedLabel,
-  onSelectLabel,
+  selectedLabels,
+  onToggleLabel,
   selectedLanguage,
   onSelectLanguage,
   searchQuery,
@@ -27,8 +27,8 @@ export function FilterPanel({
     }
 
     // Set labels
-    if (selectedLabel) {
-      params.set('labels', selectedLabel);
+    if (selectedLabels.length > 0) {
+      params.set('labels', selectedLabels.join(','));
     } else {
       params.delete('labels');
     }
@@ -37,10 +37,6 @@ export function FilterPanel({
     params.set('page', '1');
 
     router.push(`/?${params.toString()}`);
-  };
-  const handleClear = () => {
-    onClear();
-    router.replace('/');
   };
 
   return (
@@ -51,20 +47,24 @@ export function FilterPanel({
           Filter by label
         </h3>
         <div className="flex flex-wrap gap-3">
-          {labels.map((label) => (
-            <button
-              key={label}
-              onClick={() => onSelectLabel(selectedLabel === label ? null : label)}
-              data-active={selectedLabel === label}
-              className={`
-                px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200
-                ${selectedLabel === label ? 'ring-2 ring-cyan-500' : ''}
-                bg-slate-800/50 ${labelStyles[label]}
-              `}
-            >
-              {label}
-            </button>
-          ))}
+          {labels.map((label) => {
+            const active = selectedLabels.includes(label);
+
+            return (
+              <button
+                key={label}
+                onClick={() => onToggleLabel(label)}
+                data-active={active}
+                className={`
+        px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200
+        ${active ? 'ring-2 ring-cyan-500' : ''}
+        bg-slate-800/50 ${labelStyles[label]}
+      `}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -120,9 +120,9 @@ export function FilterPanel({
 
           {/* Clear & Search buttons */}
           <div className="flex gap-2">
-            {(selectedLabel || selectedLanguage !== 'All Languages' || searchQuery) && (
+            {(selectedLabels.length > 0 || selectedLanguage !== 'All Languages' || searchQuery) && (
               <button
-                onClick={handleClear}
+                onClick={onClear}
                 className="flex items-center gap-2 px-4 py-3 rounded-lg border border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
               >
                 <X size={18} />

@@ -1,8 +1,9 @@
-import { ErrorMessages, Filters, Issue, SearchIssuesResult } from '@hitch/core';
+import { ErrorMessages, Filters, Issue, Pagination, SearchIssuesResult } from '@hitch/core';
 import { useState } from 'react';
 
 export function useIssueSearch() {
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [pagination, setPagination] = useState<Pagination | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,6 +28,7 @@ export function useIssueSearch() {
 
       const data: SearchIssuesResult = await res.json();
       setIssues(data.issues);
+      setPagination(data.pagination);
     } catch (err) {
       setError(err instanceof Error ? err.message : ErrorMessages.UnknownError);
     } finally {
@@ -36,6 +38,7 @@ export function useIssueSearch() {
 
   return {
     issues,
+    pagination,
     loading,
     error,
     search,

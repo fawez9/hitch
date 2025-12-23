@@ -1,8 +1,8 @@
 export type IssueLabel = string; // flexible
 
 export interface FilterPanelProps {
-  selectedLabel: IssueLabel | null;
-  onSelectLabel: (label: IssueLabel | null) => void;
+  selectedLabels: IssueLabel[];
+  onToggleLabel: (label: IssueLabel) => void;
   selectedLanguage: string;
   onSelectLanguage: (lang: string) => void;
   searchQuery: string;
@@ -38,5 +38,11 @@ export const languages = [
   'Python',
   'Rust',
   'Go',
-  'React',
+  'Java',
+  'Dart',
+  'Shell',
+  'C++',
+  'C',
+  'C#',
+  'PHP',
 ];

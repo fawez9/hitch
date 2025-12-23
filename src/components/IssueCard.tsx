@@ -2,35 +2,7 @@
 
 import { GoIssueOpened } from 'react-icons/go';
 import { GitPullRequest } from 'lucide-react';
-import { IssueView } from '@/ui/issueView';
-
-interface IssueCardProps {
-  issue: IssueView;
-}
-
-// Only style common labels; fallback for unknown
-const labelConfig: Record<string, { bg: string; text: string; border: string }> = {
-  bug: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20' },
-  'good first issue': {
-    bg: 'bg-emerald-500/10',
-    text: 'text-emerald-400',
-    border: 'border-emerald-500/20',
-  },
-  'help wanted': { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20' },
-  documentation: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20' },
-  enhancement: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' },
-};
-
-const DEFAULT_LABEL_STYLE = 'bg-slate-500/10 text-slate-200 border border-slate-500/20';
-
-const languageColors: Record<string, string> = {
-  TypeScript: 'bg-blue-400',
-  JavaScript: 'bg-yellow-400',
-  Python: 'bg-green-400',
-  Rust: 'bg-orange-400',
-  Go: 'bg-cyan-400',
-  React: 'bg-sky-400',
-};
+import { DEFAULT_LABEL_STYLE, IssueCardProps, labelConfig, languageColors } from '@/ui/issueView';
 
 export function IssueCard({ issue }: IssueCardProps) {
   return (
@@ -53,6 +25,8 @@ export function IssueCard({ issue }: IssueCardProps) {
           <div className="flex items-center gap-2 text-sm">
             <a
               href={issue.repository.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="font-mono text-cyan-400 hover:underline decoration-cyan-400/50 underline-offset-2"
             >
               {issue.repository.name}

@@ -8,14 +8,15 @@ import { FilterPanel } from '@/components/FilterPanel';
 import { useIssueSearch } from '@/hooks/useIssueSearch';
 import { useSearchParams } from 'next/navigation';
 import { Filters } from '@hitch/core';
+import { Pagination } from '@/components/Pagination';
 
 type IssueLabel = string;
 
 export default function Home() {
-  const [selectedLabel, setSelectedLabel] = useState<IssueLabel | null>(null);
+  const [selectedLabels, setSelectedLabels] = useState<IssueLabel[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState('All Languages');
   const [searchQuery, setSearchQuery] = useState('');
-  const { issues, loading, error, search } = useIssueSearch();
+  const { issues, pagination, loading, error, search } = useIssueSearch();
   const searchParams = useSearchParams();
 
   const language = searchParams.get('language') || undefined;
@@ -40,7 +41,10 @@ export default function Home() {
 
   // Client-side filtering (only label and search, not language)
   const filteredIssues = issues.filter((issue) => {
-    const matchesLabel = selectedLabel ? issue.labels.includes(selectedLabel) : true;
+    const matchesLabel =
+      selectedLabels.length === 0
+        ? true
+        : selectedLabels.every((label) => issue.labels.includes(label));
 
     const matchesSearch =
       issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -54,8 +58,14 @@ export default function Home() {
     return matchesLabel && matchesSearch && matchesLanguage;
   });
 
+  const toggleLabel = (label: string) => {
+    setSelectedLabels((prev) =>
+      prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label],
+    );
+  };
+
   const handleClear = () => {
-    setSelectedLabel(null);
+    setSelectedLabels([]);
     setSelectedLanguage('All Languages');
     setSearchQuery('');
   };
@@ -66,14 +76,17 @@ export default function Home() {
       <div className="max-w-5xl mx-auto space-y-8 pt-10">
         <main className="space-y-8">
           <FilterPanel
-            selectedLabel={selectedLabel}
-            onSelectLabel={setSelectedLabel}
+            selectedLabels={selectedLabels}
+            onToggleLabel={toggleLabel}
             selectedLanguage={selectedLanguage}
             onSelectLanguage={setSelectedLanguage}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onClear={handleClear}
           />
+          {!loading && !error && pagination && (
+            <Pagination pagination={pagination} variant="arrows" />
+          )}
 
           <div className="space-y-4">
             <div className="flex items-center justify-between text-sm text-slate-400 px-1">
@@ -121,6 +134,9 @@ export default function Home() {
               </div>
             )}
           </div>
+          {!loading && !error && pagination && (
+            <Pagination pagination={pagination} variant="full" />
+          )}
         </main>
       </div>
       <footer className="border-t border-border border-slate-500 py-6 mt-12">
