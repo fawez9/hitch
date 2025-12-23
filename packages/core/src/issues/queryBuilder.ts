@@ -17,7 +17,12 @@ export function buildQuery(filters: Filters): string {
     query += ` updated:>${updatedAt}`;
   }
   if (labels?.length) {
-    query += labels.map((label) => ` label:${label}`).join('');
+    query += labels
+      .map((label) => {
+        const needsQuotes = label.includes(' ');
+        return needsQuotes ? ` label:"${label}"` : ` label:${label}`;
+      })
+      .join('');
   }
   return query;
 }

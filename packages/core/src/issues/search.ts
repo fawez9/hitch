@@ -63,7 +63,7 @@ export async function searchIssues(filters: Filters): Promise<SearchIssuesResult
   const url = new URL('https://api.github.com/search/issues');
   url.searchParams.append('q', query);
   url.searchParams.append('page', (filters.page || 1).toString());
-  url.searchParams.append('per_page', '30');
+  url.searchParams.append('per_page', '10');
 
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',
@@ -110,9 +110,9 @@ export async function searchIssues(filters: Filters): Promise<SearchIssuesResult
     issues: issuesWithLanguage,
     pagination: {
       page: filters.page || 1,
-      per_page: 30,
+      per_page: 10,
       total: data.total_count,
-      hasNext: (filters.page || 1) * 30 < data.total_count,
+      hasNext: (filters.page || 1) * 10 < data.total_count,
     },
   };
 }
