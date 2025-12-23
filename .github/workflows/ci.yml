@@ -33,7 +33,11 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # 6. Unit tests (core, components, hooks, lib, routes)
+      # 6. Prettier
+      - name: Prettier
+        run: npm run format:check
+
+      # 7. Unit tests (core, components, hooks, lib, routes)
       - name: Run unit tests
         run: |
           npm run test:units-core
@@ -42,12 +46,12 @@ jobs:
           npm run test:units-lib
           npm run test:units-routes
 
-      # 7. Integration tests (with GitHub token)
+      # 8. Integration tests (with GitHub token)
       - name: Run integration tests
         env:
           SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
         run: npm run test:integrations
 
-      # 8. Build (ensures deployability)
+      # 9. Build (ensures deployability)
       - name: Build
         run: npm run build
