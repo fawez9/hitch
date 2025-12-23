@@ -8,6 +8,15 @@ Hitch is a developer tool that simplifies finding and contributing to GitHub iss
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 🚀 **[Live Demo](https://hitch-two.vercel.app)** | 📖 **[Documentation](https://github.com/fawez9/hitch/wiki)**
 
+## ✨ Features
+
+- **Smart Issue Discovery** – Search GitHub issues with real-time filtering
+- **Advanced Filtering** – Filter by programming language, labels (bug, enhancement, good first issue), and keywords
+- **Optimized Performance** – Client-side filtering for instant results with server-side data fetching
+- **Pagination Support** – Handles GitHub API limits gracefully (max 1,000 results)
+- **Modern UI/UX** – Responsive design built with Tailwind CSS and smooth animations
+- **Robust Error Handling** – Clear feedback for loading states, errors, and edge cases
+
 ## 🎉 Version 1.0 - Now Live!
 
 This is the **first release** of Hitch! While it's fully functional and ready to use, we're just getting started. Exciting features and improvements are coming soon.
@@ -20,15 +29,6 @@ This is the **first release** of Hitch! While it's fully functional and ready to
 - ⭐ **Issue bookmarks** – Keep track of issues you want to contribute to
 
 > Stay tuned! Star ⭐ this repo to get updates on new features.
-
-## ✨ Features
-
-- **Smart Issue Discovery** – Search GitHub issues with real-time filtering
-- **Advanced Filtering** – Filter by programming language, labels (bug, enhancement, good first issue), and keywords
-- **Optimized Performance** – Client-side filtering for instant results with server-side data fetching
-- **Pagination Support** – Handles GitHub API limits gracefully (max 1,000 results)
-- **Modern UI/UX** – Responsive design built with Tailwind CSS and smooth animations
-- **Robust Error Handling** – Clear feedback for loading states, errors, and edge cases
 
 ## 🚀 Quick Start
 
