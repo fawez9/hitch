@@ -95,18 +95,19 @@ hitch/
 │   ├── components/             # Reusable UI components
 │   │   ├── FilterPanel.tsx
 │   │   ├── IssueCard.tsx
-│   │   └── Pagination.tsx
+│   │   ├── Pagination.tsx
+│   │   └── HomePage.tsx
 │   ├── hooks/                  # Custom React hooks
 │   │   └── useIssueSearch.ts
 │   └── lib/                    # Utility functions
 ├── packages/
 │   └── core/                   # Framework-agnostic business logic
-│       ├── src/
-│       │   └── issues/
-│       │       ├── search.ts
-│       │       ├── mapper.ts
-│       │       └── queryBuilder.ts
-│       └── tests/
+│       └── src/
+│           └── issues/
+│               ├── search.ts
+│               ├── mapper.ts
+│               ├── queryBuilder.ts
+│               └── types.ts
 ├── tests/                      # Test suites
 │   ├── core/                   # Core logic tests
 │   ├── components/             # Component tests
