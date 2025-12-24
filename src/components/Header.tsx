@@ -1,5 +1,6 @@
 'use client';
 import { GitPullRequest, Terminal } from 'lucide-react';
+import Link from 'next/link';
 
 export function Header() {
   return (
@@ -8,11 +9,11 @@ export function Header() {
         <div className="flex items-center justify-between">
           {/* Logo and title section */}
           <div className="flex items-center gap-3">
-            <a href="/">
+            <Link href="/">
               <div className="w-10 h-10 rounded-lg bg-cyan-500 flex items-center justify-center">
                 <GitPullRequest className="w-5 h-5 text-black" />
               </div>
-            </a>
+            </Link>
             <div>
               <h1 className="text-xl font-bold text-foreground tracking-tight">HITCH</h1>
               <p className="text-xs text-slate-400">Helping Issue-To-Contribution Handoffs</p>
