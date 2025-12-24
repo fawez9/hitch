@@ -18,7 +18,7 @@ Hitch is a developer tool that simplifies finding and contributing to GitHub iss
 - **Modern UI/UX** – Responsive design built with Tailwind CSS and smooth animations
 - **Robust Error Handling** – Clear feedback for loading states, errors, and edge cases
 
-## 🎉 Version 1.0 - Now Live! 🚀 **[Live Demo](https://hitch-two.vercel.app)**
+## 🎉 Version 1.0 - Now Live! 🚀 **[Live Demo](https://h-itch.vercel.app)**
 
 This is the **first release** of Hitch! While it's fully functional and ready to use, we're just getting started. Exciting features and improvements are coming soon.
 
