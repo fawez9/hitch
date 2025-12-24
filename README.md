@@ -3,10 +3,11 @@
 > **Help Issue-To-Contributions Handoffs (abrv)>> Discovering issues that match your skills**
 
 Hitch is a developer tool that simplifies finding and contributing to GitHub issues. With advanced filtering by labels, programming languages, and keywords, Hitch helps developers quickly identify meaningful contribution opportunities across open-source projects.
-
+<div align=center>
+   
 [![CI](https://github.com/fawez9/hitch/actions/workflows/ci.yml/badge.svg)](https://github.com/fawez9/hitch/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-🚀 **[Live Demo](https://hitch-two.vercel.app)** | 📖 **[Documentation](https://github.com/fawez9/hitch/wiki)**
+</div>
 
 ## ✨ Features
 
@@ -17,9 +18,10 @@ Hitch is a developer tool that simplifies finding and contributing to GitHub iss
 - **Modern UI/UX** – Responsive design built with Tailwind CSS and smooth animations
 - **Robust Error Handling** – Clear feedback for loading states, errors, and edge cases
 
-## 🎉 Version 1.0 - Now Live!
+## 🎉 Version 1.0 - Now Live! 🚀 **[Live Demo](https://hitch-two.vercel.app)**
 
 This is the **first release** of Hitch! While it's fully functional and ready to use, we're just getting started. Exciting features and improvements are coming soon.
+
 
 **🔮 Upcoming Features:**
 
