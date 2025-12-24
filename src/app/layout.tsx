@@ -6,6 +6,7 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
+
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
@@ -13,6 +14,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'HITCH - Helping Issue-To-Contribution Handoffs',
   description: 'GitHub Issue Search',
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
