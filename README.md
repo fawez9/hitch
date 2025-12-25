@@ -21,7 +21,7 @@ Whether you're a first-time contributor or a seasoned developer looking for your
 
 Think of Hitch as **hitchhiking for developers**. When you hitchhike, you're looking for a ride that's going your way. Hitch does the same thing for open-source contributions—it helps you catch a ride on projects that match your skills and interests, getting you from "I want to contribute" to "I'm contributing" faster.
 
->Star ⭐ this repo to get notified when new features drop!
+> Star ⭐ this repo to get notified when new features drop!
 
 ---
 
