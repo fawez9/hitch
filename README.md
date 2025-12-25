@@ -9,35 +9,19 @@
 
 </div>
 
-## What is HITCH ?
+---
+
+## ✨ What is HITCH ?
 
 Finding the right issue to work on shouldn't be the hardest part of contributing to open source. Hitch cuts through the noise by letting you filter GitHub issues by programming language, labels (like "good first issue" or "bug"), and keywords—all with lightning-fast client-side filtering.
 
 Whether you're a first-time contributor or a seasoned developer looking for your next project, Hitch helps you find issues worth your time.
 
-## Why HITCH ?
+## 🎯 Why HITCH ?
 
 Think of Hitch as **hitchhiking for developers**. When you hitchhike, you're looking for a ride that's going your way. Hitch does the same thing for open-source contributions—it helps you catch a ride on projects that match your skills and interests, getting you from "I want to contribute" to "I'm contributing" faster.
 
----
-
-## ✨ Features
-
-- **Smart Issue Discovery** – Search across GitHub with real-time filtering
-- **Multi-Language Support** – Filter by your preferred programming languages
-- **Label-Based Filtering** – Find bugs, enhancements, good first issues, and more
-- **Keyword Search** – Search issue titles and repo names instantly
-
-## 🔮 Coming Soon
-
-This is version 1.0.0—Beta fully functional and ready to use, but we're just getting started. Here's what's next:
-
-- 🔑 **Authentication** – Sign in to personalize your experience
-- 💾 **Saved Searches** – Bookmark your favorite filters + custom labels
-- ⭐ **Issue Bookmarking** – Track issues you want to contribute to
-- 🛠 **Contribution Tracking** – Follow your open-source journey
-
-> **_Star ⭐ this repo to get notified when new features drop!_**
+>Star ⭐ this repo to get notified when new features drop!
 
 ---
 
@@ -207,9 +191,8 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 - `feat:` New features
 - `fix:` Bug fixes
-- `docs:` Documentation updates
 - `test:` Test additions or updates
-- `refactor:` Code refactoring
+- `ref:` Code refactoring
 - `chore:` Maintenance tasks
 
 ---
