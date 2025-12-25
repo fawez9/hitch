@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/Hitch_Live-000000?style=flat&logo=vercel&logoColor=white)](https://h-itch.vercel.app)
+[![Live Demo](https://img.shields.io/badge/HITCH_Live-000000?style=flat&logo=vercel&logoColor=white)](https://h-itch.vercel.app)
 [![GitHub Stars](https://img.shields.io/github/stars/fawez9/hitch?style=flat&label=stars&color=yellow)](https://github.com/fawez9/hitch)
 [![CI](https://img.shields.io/github/actions/workflow/status/fawez9/hitch/ci.yml?branch=main&label=CI)](https://github.com/fawez9/hitch/actions/workflows/ci.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
