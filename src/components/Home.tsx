@@ -70,9 +70,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f172a]">
+    <div className="min-h-screen bg-[#0f172a] w-full overflow-x-hidden">
       <Header />
-      <div className="max-w-5xl mx-auto space-y-8 pt-10">
+      <div className="max-w-5xl mx-auto px-4 space-y-8 pt-10">
         <main className="space-y-8">
           <FilterPanel
             selectedLabels={selectedLabels}
