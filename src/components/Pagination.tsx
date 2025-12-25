@@ -31,7 +31,7 @@ export function Pagination({ pagination, variant = 'full' }: PaginationProps) {
 
   const hasPrev = currentPage > 1;
   //NOTE: this is for how many button for page visible
-  const VISIBLE_PAGES = 5;
+  const VISIBLE_PAGES = 4;
 
   const getPageRange = () => {
     const half = Math.floor(VISIBLE_PAGES / 2);
@@ -103,7 +103,7 @@ export function Pagination({ pagination, variant = 'full' }: PaginationProps) {
         )}
       </div> */}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 overflow-x-auto max-w-full scrollbar-hide">
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={!hasPrev}
