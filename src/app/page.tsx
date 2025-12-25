@@ -1,4 +1,4 @@
-import Home from '@/components/HomePage';
+import Home from '@/components/Home';
 import { Suspense } from 'react';
 
 export default function Page() {

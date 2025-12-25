@@ -1,50 +1,56 @@
-# Hitch
+![Hitch Banner](public/banner.png)
 
-> **Help Issue-To-Contributions Handoffs (abrv)>> Discovering issues that match your skills**
+[![Live Demo](https://img.shields.io/badge/Hitch_Live-000000?style=flat&logo=vercel&logoColor=white)](https://h-itch.vercel.app)
+[![GitHub Stars](https://img.shields.io/github/stars/fawez9/hitch?style=flat&label=stars&color=yellow)](https://github.com/fawez9/hitch)
+[![CI](https://img.shields.io/github/actions/workflow/status/fawez9/hitch/ci.yml?branch=main&label=CI)](https://github.com/fawez9/hitch/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-Hitch is a developer tool that simplifies finding and contributing to GitHub issues. With advanced filtering by labels, programming languages, and keywords, Hitch helps developers quickly identify meaningful contribution opportunities across open-source projects.
+---
 
-<div align=center>
-   
-[![CI](https://github.com/fawez9/hitch/actions/workflows/ci.yml/badge.svg)](https://github.com/fawez9/hitch/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-</div>
+## What is HITCH ?
 
-## 🎉 Version 1.0.0 - Now Live! ⪼------➢ 🚀 [Live Demo](https://h-itch.vercel.app)
+Finding the right issue to work on shouldn't be the hardest part of contributing to open source. Hitch cuts through the noise by letting you filter GitHub issues by programming language, labels (like "good first issue" or "bug"), and keywords—all with lightning-fast client-side filtering.
 
-This is the **first release** of Hitch! While it's fully functional and ready to use, we're just getting started.<br>
-Exciting features and improvements are **_coming soon_**.
+Whether you're a first-time contributor or a seasoned developer looking for your next project, Hitch helps you find issues worth your time.
 
-### ✨ Features
+## Why HITCH ?
 
-- **Smart Issue Discovery** – Search GitHub issues with real-time filtering
-- **Advanced Filtering** – Filter by programming language, labels (bug, enhancement, good first issue), and keywords
-- **Optimized Performance** – Client-side filtering for instant results with server-side data fetching
-- **Pagination Support** – Handles GitHub API limits gracefully (max 1,000 results)
-- **Modern UI/UX** – Responsive design built with Tailwind CSS and smooth animations
-- **Robust Error Handling** – Clear feedback for loading states, errors, and edge cases
+Think of Hitch as **hitchhiking for developers**. When you hitchhike, you're looking for a ride that's going your way. Hitch does the same thing for open-source contributions—it helps you catch a ride on projects that match your skills and interests, getting you from "I want to contribute" to "I'm contributing" faster.
 
-### 🔮 Upcoming Features:
+---
 
-- 🛠 **Track Issues You Care About**
-- 🔑 **Authentication** – Sign in with GitHub to personalize your experience
-- 💾 **Saved searches** – Bookmark your favorite filters for quick access
-- ⭐ **Issue bookmarks** – Keep track of issues you want to contribute to
+## ✨ Features
 
-> Stay tuned! Star ⭐ this repo to get updates on new features.
+- **Smart Issue Discovery** – Search across GitHub with real-time filtering
+- **Multi-Language Support** – Filter by your preferred programming languages
+- **Label-Based Filtering** – Find bugs, enhancements, good first issues, and more
+- **Keyword Search** – Search issue titles and repo names instantly
+
+## 🔮 Coming Soon
+
+This is version 1.0—fully functional and ready to use, but we're just getting started. Here's what's next:
+
+- 🔑 **Authentication** – Sign in to personalize your experience
+- 💾 **Saved Searches** – Bookmark your favorite filters + custom labels
+- ⭐ **Issue Bookmarking** – Track issues you want to contribute to
+- 🛠 **Contribution Tracking** – Follow your open-source journey
+
+> **_Star ⭐ this repo to get notified when new features drop!_**
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Node.js** v20 or higher
-- **npm** v10 or higher
-- **GitHub Personal Access Token** (optional, for higher API rate limits)
+- Node.js v20 or higher
+- npm v10 or higher
+- GitHub Personal Access Token (optional but recommended)
 
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/hitch.git
+git clone https://github.com/fawez9/hitch.git
 cd hitch
 npm install
 ```
@@ -57,7 +63,7 @@ Create a `.env` file in the root directory:
 SECRET_TOKEN=your_github_personal_access_token
 ```
 
-> **Note:** A GitHub token is optional but recommended to increase API rate limits from 60 to 5,000 requests per hour. [Generate a token here](https://github.com/settings/tokens).
+**Why use a token?** Without one, you're limited to 60 GitHub API requests per hour. With a token, you get 5,000 requests per hour. [Generate your token here](https://github.com/settings/tokens) (no special permissions needed).
 
 ### Development
 
@@ -65,7 +71,7 @@ SECRET_TOKEN=your_github_personal_access_token
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to view the application.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Production Build
 
@@ -74,57 +80,59 @@ npm run build
 npm start
 ```
 
-## 🛠️ Tech Stack
+---
 
-| Category             | Technologies                                    |
-| -------------------- | ----------------------------------------------- |
-| **Framework**        | Next.js 16 (React 19, App Router)               |
-| **Language**         | TypeScript                                      |
-| **Styling**          | Tailwind CSS                                    |
-| **Icons**            | Lucide React, React Icons                       |
-| **State Management** | React Hooks (useState, useEffect, custom hooks) |
-| **Testing**          | Vitest, React Testing Library                   |
-| **API**              | GitHub REST API v3                              |
+## 🛠️ Built With
+
+**Core:** Next.js 16 (React 19, App Router) • TypeScript • GitHub REST API v3
+
+**Styling:** Tailwind CSS • Lucide React • React Icons
+
+**Testing:** Vitest • React Testing Library
+
+**State:** React Hooks (useState, useEffect, custom hooks)
+
+---
 
 ## 📂 Project Structure
 
 ```
 hitch/
 ├── src/
-│   ├── app/                    # Next.js App Router pages
-│   │   ├── api/v1/issues/      # API routes
+│   ├── app/                    # Next.js pages & API routes
+│   │   ├── api/v1/issues/      # GitHub API integration
 │   │   ├── page.tsx            # Home page
 │   │   └── layout.tsx          # Root layout
-│   ├── components/             # Reusable UI components
-│   │   ├── FilterPanel.tsx
-│   │   ├── IssueCard.tsx
-│   │   ├── Pagination.tsx
-│   │   └── HomePage.tsx
+│   ├── components/             # UI components
+│   │   ├── FilterPanel.tsx     # Search & filter controls
+│   │   ├── IssueCard.tsx       # Issue display card
+│   │   ├── Pagination.tsx      # Results pagination
+│   │   └── HomePage.tsx        # Main page component
 │   ├── hooks/                  # Custom React hooks
-│   │   └── useIssueSearch.ts
+│   │   └── useIssueSearch.ts   # Issue search logic
 │   └── lib/                    # Utility functions
 ├── packages/
-│   └── core/                   # Framework-agnostic business logic
-│       └── src/
-│           └── issues/
-│               ├── search.ts
-│               ├── mapper.ts
-│               ├── queryBuilder.ts
-│               └── types.ts
+│   └── core/                   # Framework-agnostic logic
+│       └── src/issues/
+│           ├── search.ts       # Search implementation
+│           ├── mapper.ts       # Data transformation
+│           ├── queryBuilder.ts # GitHub query builder
+│           └── types.ts        # TypeScript types
 ├── tests/                      # Test suites
-│   ├── core/                   # Core logic tests
-│   ├── components/             # Component tests
+│   ├── core/                   # Business logic tests
+│   ├── components/             # UI component tests
 │   └── hooks/                  # Hook tests
-├── .github/workflows/          # CI/CD configuration
 └── public/                     # Static assets
 ```
+
+---
 
 ## 🧪 Testing
 
 ### Run All Tests
 
 ```bash
-npm run test
+npm test
 ```
 
 ### Run Specific Test Suites
@@ -142,7 +150,9 @@ npm run test:integrations        # Integration tests (requires SECRET_TOKEN)
 npm run test:watch
 ```
 
-## 📜 Available Scripts
+---
+
+## 📜 Available Commands
 
 | Command              | Description                  |
 | -------------------- | ---------------------------- |
@@ -154,34 +164,39 @@ npm run test:watch
 | `npm test`           | Run all tests                |
 | `npm run test:watch` | Run tests in watch mode      |
 
+---
+
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+We'd love your help making Hitch better! Here's how to contribute:
+
+### Getting Started
 
 1. **Fork the repository**
 2. **Create a feature branch**
    ```bash
    git checkout -b feature/your-feature-name
    ```
-3. **Make your changes and commit**
+3. **Make your changes**
+4. **Commit with a clear message**
    ```bash
    git commit -m "feat: add your feature description"
    ```
-4. **Push to your fork**
+5. **Push to your fork**
    ```bash
    git push origin feature/your-feature-name
    ```
-5. **Open a Pull Request**
+6. **Open a Pull Request**
 
 ### Before Submitting
 
-Ensure your code passes all checks:
+Make sure everything passes:
 
 ```bash
 npm run lint          # Check code style
-npm run typecheck     # Check TypeScript types
-npm test              # Run tests
-npm run build         # Verify production build
+npm run typecheck     # Verify TypeScript
+npm test              # Run all tests
+npm run build         # Ensure production build works
 ```
 
 ### Commit Convention
@@ -190,22 +205,35 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 - `feat:` New features
 - `fix:` Bug fixes
-- `docs:` Documentation changes
-- `test:` Test updates
-- `ref:` Code refactoring/typos
+- `docs:` Documentation updates
+- `test:` Test additions or updates
+- `refactor:` Code refactoring
+- `chore:` Maintenance tasks
+
+---
 
 ## 📝 License
 
 This project is licensed under the [MIT License](LICENSE).
 
+---
+
 ## 🙏 Acknowledgments
 
-- Built with [Next.js](https://nextjs.org/)
-- Powered by [GitHub REST API](https://docs.github.com/en/rest)
-- UI components styled with [Tailwind CSS](https://tailwindcss.com/)
+Built with love for the open-source community using:
+
+- [Next.js](https://nextjs.org/) – The React framework for production
+- [GitHub REST API](https://docs.github.com/en/rest) – Powering our issue discovery
+- [Tailwind CSS](https://tailwindcss.com/) – Beautiful, utility-first styling
 
 ---
 
-**Made with ❤️ for the open-source community**
+<div align="center">
 
-_Helping developers find their next contribution, one issue at a time._
+**Open source and community-maintained.**
+
+_Helping you find your next contribution, one issue at a time_
+
+[Website](https://h-itch.vercel.app) • [Report Bug](https://github.com/fawez9/hitch/issues) • [Request Feature](https://github.com/fawez9/hitch/issues)
+
+</div>
