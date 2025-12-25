@@ -31,7 +31,7 @@ export function Pagination({ pagination, variant = 'full' }: PaginationProps) {
 
   const hasPrev = currentPage > 1;
   //NOTE: this is for how many button for page visible
-  const VISIBLE_PAGES = 4;
+  const VISIBLE_PAGES = 5;
 
   const getPageRange = () => {
     const half = Math.floor(VISIBLE_PAGES / 2);
