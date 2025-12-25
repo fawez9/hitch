@@ -10,7 +10,12 @@ Hitch is a developer tool that simplifies finding and contributing to GitHub iss
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 </div>
 
-## ✨ Features
+## 🎉 Version 1.0.0 - Now Live! ⪼------➢ 🚀 [Live Demo](https://h-itch.vercel.app)
+
+This is the **first release** of Hitch! While it's fully functional and ready to use, we're just getting started.<br>
+Exciting features and improvements are **_coming soon_**.
+
+### ✨ Features
 
 - **Smart Issue Discovery** – Search GitHub issues with real-time filtering
 - **Advanced Filtering** – Filter by programming language, labels (bug, enhancement, good first issue), and keywords
@@ -19,11 +24,7 @@ Hitch is a developer tool that simplifies finding and contributing to GitHub iss
 - **Modern UI/UX** – Responsive design built with Tailwind CSS and smooth animations
 - **Robust Error Handling** – Clear feedback for loading states, errors, and edge cases
 
-## 🎉 Version 1.0 - Now Live! 🚀 **[Live Demo](https://h-itch.vercel.app)**
-
-This is the **first release** of Hitch! While it's fully functional and ready to use, we're just getting started. Exciting features and improvements are coming soon.
-
-**🔮 Upcoming Features:**
+### 🔮 Upcoming Features:
 
 - 🛠 **Track Issues You Care About**
 - 🔑 **Authentication** – Sign in with GitHub to personalize your experience
