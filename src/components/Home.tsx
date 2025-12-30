@@ -70,10 +70,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f172a] w-full overflow-x-hidden">
+    <div className="min-h-screen bg-[#0f172a] w-full">
       <Header />
-      <div className="max-w-5xl mx-auto px-4 space-y-8 pt-10">
-        <main className="space-y-8">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 space-y-8 pt-10">
+        <main className="space-y-8 w-full min-w-0">
           <FilterPanel
             selectedLabels={selectedLabels}
             onToggleLabel={toggleLabel}
@@ -87,7 +87,7 @@ export default function Home() {
             <Pagination pagination={pagination} variant="arrows" />
           )}
 
-          <div className="space-y-4">
+          <div className="space-y-4 w-full min-w-0">
             <div className="flex items-center justify-between text-sm text-slate-400 px-1">
               <span>
                 Showing {filteredIssues.length} of {issues.length} issues
@@ -112,7 +112,7 @@ export default function Home() {
                 </button>
               </div>
             ) : filteredIssues.length > 0 ? (
-              <div className="grid gap-4">
+              <div className="grid gap-4 w-full min-w-0">
                 {filteredIssues.map((issue) => (
                   <IssueCard key={issue.id} issue={issue} />
                 ))}
