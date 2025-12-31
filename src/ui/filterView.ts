@@ -1,15 +1,5 @@
 export type IssueLabel = string; // flexible
 
-export interface FilterPanelProps {
-  selectedLabels: IssueLabel[];
-  onToggleLabel: (label: IssueLabel) => void;
-  selectedLanguage: string;
-  onSelectLanguage: (lang: string) => void;
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-  onClear: () => void;
-}
-
 // Default UI labels (users can still add custom labels)
 export const labels: string[] = [
   'bug',

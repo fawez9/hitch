@@ -36,10 +36,6 @@ export function toIssueView(issue: Issue): IssueView {
   };
 }
 
-export interface IssueCardProps {
-  issue: IssueView;
-}
-
 // Only style common labels; fallback for unknown
 export const labelConfig: Record<string, { bg: string; text: string; border: string }> = {
   bug: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20' },

@@ -6,22 +6,28 @@ import { IssueCard } from '@/components/IssueCard';
 import { Header } from '@/components/Header';
 import { FilterPanel } from '@/components/FilterPanel';
 import { useIssueSearch } from '@/hooks/useIssueSearch';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Filters } from '@hitch/core';
 import { Pagination } from '@/components/Pagination';
 import { IssueLabel } from '@/ui/filterView';
 
 export default function Home() {
-  const [selectedLabels, setSelectedLabels] = useState<IssueLabel[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState('All Languages');
   const [searchQuery, setSearchQuery] = useState('');
   const { issues, pagination, loading, error, search } = useIssueSearch();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
+  // Read state from URL (single source of truth)
   const language = searchParams.get('language') || undefined;
   const labelsParam = searchParams.get('labels');
   const updatedAt = searchParams.get('updatedAt') || undefined;
   const pageParam = searchParams.get('page');
+
+  // Derive selected labels and language from URL
+  const selectedLabels: IssueLabel[] = labelsParam ? (labelsParam.split(',') as IssueLabel[]) : [];
+  const selectedLanguage = language
+    ? language.charAt(0).toUpperCase() + language.slice(1)
+    : 'All Languages';
 
   const filters: Filters = {
     language,
@@ -38,35 +44,57 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // Client-side filtering (only label and search, not language)
+  // Client-side search filtering only
   const filteredIssues = issues.filter((issue) => {
-    const matchesLabel =
-      selectedLabels.length === 0
-        ? true
-        : selectedLabels.every((label) => issue.labels.includes(label));
+    if (!searchQuery.trim()) return true;
 
-    const matchesSearch =
-      issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      issue.repository.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesLanguage =
-      selectedLanguage === 'All Languages'
-        ? true
-        : issue.repository.language?.toLowerCase() === selectedLanguage.toLowerCase();
-
-    return matchesLabel && matchesSearch && matchesLanguage;
+    const query = searchQuery.toLowerCase();
+    return (
+      issue.title.toLowerCase().includes(query) ||
+      issue.repository.name.toLowerCase().includes(query)
+    );
   });
 
-  const toggleLabel = (label: string) => {
-    setSelectedLabels((prev) =>
-      prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label],
-    );
+  // Handle label toggle - updates URL
+  const handleToggleLabel = (label: IssueLabel) => {
+    const params = new URLSearchParams(searchParams);
+    const currentLabels = params.get('labels')?.split(',').filter(Boolean) || [];
+
+    let newLabels;
+    if (currentLabels.includes(label)) {
+      newLabels = currentLabels.filter((l) => l !== label);
+    } else {
+      newLabels = [...currentLabels, label];
+    }
+
+    if (newLabels.length > 0) {
+      params.set('labels', newLabels.join(','));
+    } else {
+      params.delete('labels');
+    }
+
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
   };
 
+  // Handle language change - updates URL
+  const handleSelectLanguage = (lang: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (lang && lang !== 'All Languages') {
+      params.set('language', lang.toLowerCase());
+    } else {
+      params.delete('language');
+    }
+
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
+  };
+
+  // Handle clear all filters
   const handleClear = () => {
-    setSelectedLabels([]);
-    setSelectedLanguage('All Languages');
     setSearchQuery('');
+    router.push('/');
   };
 
   return (
@@ -76,9 +104,9 @@ export default function Home() {
         <main className="space-y-8 w-full min-w-0">
           <FilterPanel
             selectedLabels={selectedLabels}
-            onToggleLabel={toggleLabel}
+            onToggleLabel={handleToggleLabel}
             selectedLanguage={selectedLanguage}
-            onSelectLanguage={setSelectedLanguage}
+            onSelectLanguage={handleSelectLanguage}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onClear={handleClear}
