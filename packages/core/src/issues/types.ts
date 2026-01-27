@@ -1,4 +1,5 @@
 export interface Filters {
+  keyword?: string | null;
   language?: string | null;
   labels?: string[];
   updatedAt?: string;

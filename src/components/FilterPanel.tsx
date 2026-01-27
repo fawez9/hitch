@@ -1,8 +1,18 @@
 'use client';
 
-import { FilterPanelProps, labels, labelStyles, languages } from '@/ui/filterView';
+import { IssueLabel, labels, labelStyles, languages } from '@/ui/filterView';
 import { Search, X } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
+
+interface FilterPanelProps {
+  selectedLabels: IssueLabel[];
+  onToggleLabel: (label: IssueLabel) => void;
+  selectedLanguage: string;
+  onSelectLanguage: (lang: string) => void;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+  onSearchSubmit: () => void;
+  onClear: () => void;
+}
 
 export function FilterPanel({
   selectedLabels,
@@ -11,34 +21,9 @@ export function FilterPanel({
   onSelectLanguage,
   searchQuery,
   onSearchChange,
+  onSearchSubmit,
   onClear,
 }: FilterPanelProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams);
-
-    // Set language (remove if "All Languages")
-    if (selectedLanguage && selectedLanguage !== 'All Languages') {
-      params.set('language', selectedLanguage.toLowerCase());
-    } else {
-      params.delete('language');
-    }
-
-    // Set labels
-    if (selectedLabels.length > 0) {
-      params.set('labels', selectedLabels.join(','));
-    } else {
-      params.delete('labels');
-    }
-
-    // Always reset to page 1 on new search
-    params.set('page', '1');
-
-    router.push(`/?${params.toString()}`);
-  };
-
   return (
     <div className="bg-[#1e293b] rounded-2xl border border-slate-700/50 p-6 shadow-xl shadow-black/20">
       {/* Label Filters */}
@@ -56,10 +41,10 @@ export function FilterPanel({
                 onClick={() => onToggleLabel(label)}
                 data-active={active}
                 className={`
-        px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200
-        ${active ? 'ring-2 ring-cyan-500' : ''}
-        bg-slate-800/50 ${labelStyles[label]}
-      `}
+                  px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200
+                  ${active ? 'ring-2 ring-cyan-500 scale-105' : 'hover:scale-105'}
+                  bg-slate-800/50 ${labelStyles[label]}
+                `}
               >
                 {label}
               </button>
@@ -118,25 +103,23 @@ export function FilterPanel({
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
           </div>
 
-          {/* Clear & Search buttons */}
-          <div className="flex gap-2">
-            {(selectedLabels.length > 0 || selectedLanguage !== 'All Languages' || searchQuery) && (
-              <button
-                onClick={onClear}
-                className="flex items-center gap-2 px-4 py-3 rounded-lg border border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
-              >
-                <X size={18} />
-                <span className="hidden sm:inline">Clear</span>
-              </button>
-            )}
+          {/* Clear button */}
+          {(selectedLabels.length > 0 || selectedLanguage !== 'All Languages' || searchQuery) && (
             <button
-              onClick={handleSearch}
-              className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/20"
+              onClick={onClear}
+              className="flex items-center gap-2 px-4 py-3 rounded-lg border border-slate-700 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors"
             >
-              <Search size={18} />
-              <span className="hidden sm:inline">Search</span>
+              <X size={18} />
+              <span className="hidden sm:inline">Clear</span>
             </button>
-          </div>
+          )}
+          <button
+            onClick={onSearchSubmit}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/20"
+          >
+            <Search size={18} />
+            <span className="hidden sm:inline">Search</span>
+          </button>
         </div>
       </div>
     </div>

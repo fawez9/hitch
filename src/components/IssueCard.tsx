@@ -1,7 +1,10 @@
 'use client';
 import { GoIssueOpened } from 'react-icons/go';
 import { GitPullRequest } from 'lucide-react';
-import { DEFAULT_LABEL_STYLE, IssueCardProps, labelConfig, languageColors } from '@/ui/issueView';
+import { DEFAULT_LABEL_STYLE, IssueView, labelConfig, languageColors } from '@/ui/issueView';
+interface IssueCardProps {
+  issue: IssueView;
+}
 
 export function IssueCard({ issue }: IssueCardProps) {
   return (

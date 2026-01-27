@@ -60,6 +60,7 @@ async function fetchRepoLanguage(owner: string, name: string): Promise<string | 
 
 export async function searchIssues(filters: Filters): Promise<SearchIssuesResult> {
   const query = buildQuery(filters);
+  // console.log('FINAL QUERY:', query);
   const url = new URL('https://api.github.com/search/issues');
   url.searchParams.append('q', query);
   url.searchParams.append('page', (filters.page || 1).toString());

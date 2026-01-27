@@ -8,8 +8,11 @@
 import { Filters } from '.';
 
 export function buildQuery(filters: Filters): string {
-  const { language, labels, updatedAt } = filters;
+  const { keyword, language, labels, updatedAt } = filters;
   let query = 'is:issue is:open';
+  if (keyword) {
+    query = `${keyword} ${query}`;
+  }
   if (language) {
     query += ` language:${language}`;
   }

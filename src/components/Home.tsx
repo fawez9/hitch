@@ -5,68 +5,115 @@ import { Loader2, AlertCircle, Search } from 'lucide-react';
 import { IssueCard } from '@/components/IssueCard';
 import { Header } from '@/components/Header';
 import { FilterPanel } from '@/components/FilterPanel';
+
 import { useIssueSearch } from '@/hooks/useIssueSearch';
-import { useSearchParams } from 'next/navigation';
-import { Filters } from '@hitch/core';
+import { useSearchParams, useRouter } from 'next/navigation';
+
 import { Pagination } from '@/components/Pagination';
 import { IssueLabel } from '@/ui/filterView';
 
 export default function Home() {
-  const [selectedLabels, setSelectedLabels] = useState<IssueLabel[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState('All Languages');
-  const [searchQuery, setSearchQuery] = useState('');
-  const { issues, pagination, loading, error, search } = useIssueSearch();
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const { issues, pagination, loading, error, search } = useIssueSearch();
 
+  // Read state from URL (single source of truth)
+  const keyword = searchParams.get('q') ?? '';
   const language = searchParams.get('language') || undefined;
   const labelsParam = searchParams.get('labels');
   const updatedAt = searchParams.get('updatedAt') || undefined;
   const pageParam = searchParams.get('page');
 
-  const filters: Filters = {
-    language,
-    labels: labelsParam ? labelsParam.split(',') : undefined,
-    updatedAt,
-    page: pageParam ? Number(pageParam) : 1,
-  };
+  // Initialize search query from URL
+  const [searchQuery, setSearchQuery] = useState(keyword);
 
+  // Sync searchQuery with URL when URL changes
   useEffect(() => {
-    const timer = setTimeout(() => {
-      search(filters);
-    }, 1000);
-    return () => clearTimeout(timer);
+    setSearchQuery(keyword);
+  }, [keyword]);
+
+  // Derive selected labels and language from URL
+  const selectedLabels: IssueLabel[] = labelsParam ? (labelsParam.split(',') as IssueLabel[]) : [];
+  const selectedLanguage = language
+    ? language.charAt(0).toUpperCase() + language.slice(1)
+    : 'All Languages';
+
+  // Trigger search when URL params change (not local searchQuery state)
+  useEffect(() => {
+    search({
+      keyword: keyword || undefined,
+      language,
+      labels: labelsParam ? labelsParam.split(',') : undefined,
+      updatedAt,
+      page: pageParam ? Number(pageParam) : 1,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [keyword, language, labelsParam, updatedAt, pageParam]);
 
-  // Client-side filtering (only label and search, not language)
+  // Client-side search filtering only
   const filteredIssues = issues.filter((issue) => {
-    const matchesLabel =
-      selectedLabels.length === 0
-        ? true
-        : selectedLabels.every((label) => issue.labels.includes(label));
+    if (!keyword.trim()) return true;
 
-    const matchesSearch =
-      issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      issue.repository.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesLanguage =
-      selectedLanguage === 'All Languages'
-        ? true
-        : issue.repository.language?.toLowerCase() === selectedLanguage.toLowerCase();
-
-    return matchesLabel && matchesSearch && matchesLanguage;
-  });
-
-  const toggleLabel = (label: string) => {
-    setSelectedLabels((prev) =>
-      prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label],
+    const query = keyword.toLowerCase();
+    return (
+      issue.title.toLowerCase().includes(query) ||
+      issue.repository.name.toLowerCase().includes(query)
     );
+  });
+  // Handle search keyword
+  const handleSearchSubmit = () => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (searchQuery.trim()) {
+      params.set('q', searchQuery.trim());
+    } else {
+      params.delete('q');
+    }
+
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
   };
 
+  // Handle label toggle - updates URL
+  const handleToggleLabel = (label: IssueLabel) => {
+    const params = new URLSearchParams(window.location.search);
+    const currentLabels = params.get('labels')?.split(',').filter(Boolean) || [];
+
+    let newLabels;
+    if (currentLabels.includes(label)) {
+      newLabels = currentLabels.filter((l) => l !== label);
+    } else {
+      newLabels = [...currentLabels, label];
+    }
+
+    if (newLabels.length > 0) {
+      params.set('labels', newLabels.join(','));
+    } else {
+      params.delete('labels');
+    }
+
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
+  };
+
+  // Handle language change - updates URL
+  const handleSelectLanguage = (lang: string) => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (lang && lang !== 'All Languages') {
+      params.set('language', lang.toLowerCase());
+    } else {
+      params.delete('language');
+    }
+
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
+  };
+
+  // Handle clear all filters
   const handleClear = () => {
-    setSelectedLabels([]);
-    setSelectedLanguage('All Languages');
     setSearchQuery('');
+    router.push('/');
   };
 
   return (
@@ -76,11 +123,12 @@ export default function Home() {
         <main className="space-y-8 w-full min-w-0">
           <FilterPanel
             selectedLabels={selectedLabels}
-            onToggleLabel={toggleLabel}
+            onToggleLabel={handleToggleLabel}
             selectedLanguage={selectedLanguage}
-            onSelectLanguage={setSelectedLanguage}
+            onSelectLanguage={handleSelectLanguage}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
+            onSearchSubmit={handleSearchSubmit}
             onClear={handleClear}
           />
           {!loading && !error && pagination && (
