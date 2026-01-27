@@ -59,15 +59,38 @@ describe('FilterPanel', () => {
     expect(onSearchSubmit).toHaveBeenCalledOnce();
   });
 
-  it('calls onSearchChange when typing in search input', async () => {
+  it('allows typing in search input without triggering search', async () => {
     const onSearchChange = vi.fn();
-    renderPanel({ onSearchChange });
+    const onSearchSubmit = vi.fn();
+    renderPanel({ onSearchChange, onSearchSubmit, searchQuery: '' });
 
     const searchInput = screen.getByPlaceholderText(/search issues/i);
-    await userEvent.type(searchInput, 'test query');
+    await userEvent.type(searchInput, 'test');
 
+    // onSearchChange should be called (to update state)
     expect(onSearchChange).toHaveBeenCalled();
-    expect(onSearchChange).toHaveBeenLastCalledWith('test query');
+    // But onSearchSubmit should NOT be called until Search button is clicked
+    expect(onSearchSubmit).not.toHaveBeenCalled();
+  });
+
+  it('triggers search only when Search button is clicked', async () => {
+    const onSearchChange = vi.fn();
+    const onSearchSubmit = vi.fn();
+    renderPanel({ onSearchChange, onSearchSubmit, searchQuery: 'test query' });
+
+    // Type in the input
+    const searchInput = screen.getByPlaceholderText(/search issues/i);
+    await userEvent.clear(searchInput);
+    await userEvent.type(searchInput, 'new search');
+
+    // Search should not be triggered yet
+    expect(onSearchSubmit).not.toHaveBeenCalled();
+
+    // Click Search button
+    await userEvent.click(screen.getByRole('button', { name: /search/i }));
+
+    // Now search should be triggered
+    expect(onSearchSubmit).toHaveBeenCalledOnce();
   });
 
   it('calls onSelectLanguage when changing language', async () => {
