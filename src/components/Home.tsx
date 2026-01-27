@@ -5,9 +5,10 @@ import { Loader2, AlertCircle, Search } from 'lucide-react';
 import { IssueCard } from '@/components/IssueCard';
 import { Header } from '@/components/Header';
 import { FilterPanel } from '@/components/FilterPanel';
+
 import { useIssueSearch } from '@/hooks/useIssueSearch';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Filters } from '@hitch/core';
+
 import { Pagination } from '@/components/Pagination';
 import { IssueLabel } from '@/ui/filterView';
 
