@@ -5,8 +5,11 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
   const labelsParam = searchParams.get('labels');
+  const keyword = searchParams.get('q');
+  // console.log('keyword here ----->', keyword);
 
   const filters: Filters = {
+    keyword: keyword || undefined,
     language: searchParams.get('language') ?? undefined,
     labels: labelsParam ? labelsParam.split(',') : undefined, //split by comma
     page: Number(searchParams.get('page') ?? 1),

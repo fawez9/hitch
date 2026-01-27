@@ -14,6 +14,9 @@ export function useIssueSearch() {
 
       const params = new URLSearchParams();
 
+      // ✅ ADD THIS - Missing keyword parameter!
+      if (filters.keyword) params.set('q', filters.keyword);
+
       if (filters.labels) params.set('labels', filters.labels.join(','));
       if (filters.language) params.set('language', filters.language);
       if (filters.updatedAt) params.set('updatedAt', filters.updatedAt);
@@ -23,7 +26,7 @@ export function useIssueSearch() {
 
       if (!res.ok) {
         const text = await res.text();
-        throw new Error(`${ErrorMessages.GitHubFetchFailed}:${text}`);
+        throw new Error(`${ErrorMessages.GitHubFetchFailed}: ${text}`);
       }
 
       const data: SearchIssuesResult = await res.json();

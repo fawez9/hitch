@@ -10,6 +10,7 @@ interface FilterPanelProps {
   onSelectLanguage: (lang: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  onSearchSubmit: () => void;
   onClear: () => void;
 }
 
@@ -20,6 +21,7 @@ export function FilterPanel({
   onSelectLanguage,
   searchQuery,
   onSearchChange,
+  onSearchSubmit,
   onClear,
 }: FilterPanelProps) {
   return (
@@ -111,7 +113,10 @@ export function FilterPanel({
               <span className="hidden sm:inline">Clear</span>
             </button>
           )}
-          <button className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/20">
+          <button
+            onClick={onSearchSubmit}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/20"
+          >
             <Search size={18} />
             <span className="hidden sm:inline">Search</span>
           </button>

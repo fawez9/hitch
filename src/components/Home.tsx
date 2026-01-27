@@ -12,16 +12,24 @@ import { Pagination } from '@/components/Pagination';
 import { IssueLabel } from '@/ui/filterView';
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const { issues, pagination, loading, error, search } = useIssueSearch();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { issues, pagination, loading, error, search } = useIssueSearch();
 
   // Read state from URL (single source of truth)
+  const keyword = searchParams.get('q') ?? '';
   const language = searchParams.get('language') || undefined;
   const labelsParam = searchParams.get('labels');
   const updatedAt = searchParams.get('updatedAt') || undefined;
   const pageParam = searchParams.get('page');
+
+  // Initialize search query from URL
+  const [searchQuery, setSearchQuery] = useState(keyword);
+
+  // Sync searchQuery with URL when URL changes
+  useEffect(() => {
+    setSearchQuery(keyword);
+  }, [keyword]);
 
   // Derive selected labels and language from URL
   const selectedLabels: IssueLabel[] = labelsParam ? (labelsParam.split(',') as IssueLabel[]) : [];
@@ -29,35 +37,45 @@ export default function Home() {
     ? language.charAt(0).toUpperCase() + language.slice(1)
     : 'All Languages';
 
-  const filters: Filters = {
-    language,
-    labels: labelsParam ? labelsParam.split(',') : undefined,
-    updatedAt,
-    page: pageParam ? Number(pageParam) : 1,
-  };
-
+  // Trigger search when URL params change (not local searchQuery state)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      search(filters);
-    }, 1000);
-    return () => clearTimeout(timer);
+    search({
+      keyword: keyword || undefined,
+      language,
+      labels: labelsParam ? labelsParam.split(',') : undefined,
+      updatedAt,
+      page: pageParam ? Number(pageParam) : 1,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [keyword, language, labelsParam, updatedAt, pageParam]);
 
   // Client-side search filtering only
   const filteredIssues = issues.filter((issue) => {
-    if (!searchQuery.trim()) return true;
+    if (!keyword.trim()) return true;
 
-    const query = searchQuery.toLowerCase();
+    const query = keyword.toLowerCase();
     return (
       issue.title.toLowerCase().includes(query) ||
       issue.repository.name.toLowerCase().includes(query)
     );
   });
+  // Handle search keyword
+  const handleSearchSubmit = () => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (searchQuery.trim()) {
+      params.set('q', searchQuery.trim());
+    } else {
+      params.delete('q');
+    }
+
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
+  };
 
   // Handle label toggle - updates URL
   const handleToggleLabel = (label: IssueLabel) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(window.location.search);
     const currentLabels = params.get('labels')?.split(',').filter(Boolean) || [];
 
     let newLabels;
@@ -79,7 +97,7 @@ export default function Home() {
 
   // Handle language change - updates URL
   const handleSelectLanguage = (lang: string) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(window.location.search);
 
     if (lang && lang !== 'All Languages') {
       params.set('language', lang.toLowerCase());
@@ -109,6 +127,7 @@ export default function Home() {
             onSelectLanguage={handleSelectLanguage}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
+            onSearchSubmit={handleSearchSubmit}
             onClear={handleClear}
           />
           {!loading && !error && pagination && (
