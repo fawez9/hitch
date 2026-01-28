@@ -14,9 +14,7 @@ export function useIssueSearch() {
 
       const params = new URLSearchParams();
 
-      // ✅ ADD THIS - Missing keyword parameter!
       if (filters.keyword) params.set('q', filters.keyword);
-
       if (filters.labels) params.set('labels', filters.labels.join(','));
       if (filters.language) params.set('language', filters.language);
       if (filters.updatedAt) params.set('updatedAt', filters.updatedAt);
