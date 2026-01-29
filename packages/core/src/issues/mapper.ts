@@ -51,6 +51,7 @@ export function issuesMapper(items: GitHubIssueItem[]): Issue[] {
       id: item.id.toString(),
       title: item.title,
       url: item.html_url,
+      body: item.body,
       repository: {
         name: repoInfo.name,
         owner: repoInfo.owner,
@@ -58,6 +59,7 @@ export function issuesMapper(items: GitHubIssueItem[]): Issue[] {
         language: null, // Language is on the item, not nested
       },
       labels: item.labels.map((label) => label.name),
+      comments: item.comments,
       createdAt: formatOpenedAt(item.created_at),
       updatedAt: item.updated_at, //TODO: check if u need the same function for updatedAt
       difficulty: 'Beginner',

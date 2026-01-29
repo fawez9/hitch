@@ -1,7 +1,8 @@
 'use client';
 import { GoIssueOpened } from 'react-icons/go';
-import { GitPullRequest } from 'lucide-react';
+import { GitPullRequest, MessageCircle } from 'lucide-react';
 import { DEFAULT_LABEL_STYLE, IssueView, labelConfig, languageColors } from '@/ui/issueView';
+import ReactMarkdown from 'react-markdown';
 interface IssueCardProps {
   issue: IssueView;
 }
@@ -52,6 +53,24 @@ export function IssueCard({ issue }: IssueCardProps) {
             <span>By {issue.repository.owner}</span>
           </div>
         </div>
+        {/* Description (hidden until hover) */}
+        <div
+          className="
+    mt-3
+    text-sm
+    text-slate-400
+    opacity-0
+    max-h-0
+    overflow-hidden
+    group-hover:opacity-100
+    group-hover:max-h-40
+    transition-all
+    duration-300
+  "
+        >
+          {issue.body ? <ReactMarkdown>{issue.body}</ReactMarkdown> : 'No description provided.'}
+        </div>
+
         {/* Footer: Labels and Metrics */}
         <div className="flex items-center justify-between mt-2 w-full min-w-0">
           <div className="flex flex-wrap gap-2 min-w-0 flex-1">
@@ -71,6 +90,10 @@ export function IssueCard({ issue }: IssueCardProps) {
             })}
           </div>
           <div className="flex items-center gap-4 text-slate-500 text-sm shrink-0">
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <MessageCircle size={16} />
+              {issue.comments ? <span>{issue.comments}</span> : '0'}
+            </div>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity text-green-500">
               <GitPullRequest size={16} />
             </div>
