@@ -23,7 +23,7 @@ export function Header() {
           {/* Version badge */}
           <div className="flex items-center gap-2 text-xs font-mono text-slate-400 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-800">
             <Terminal className="w-3.5 h-3.5" />
-            <span>v1.0.0-Beta</span>
+            <span>v1.0.1-Beta</span>
           </div>
         </div>
       </div>
