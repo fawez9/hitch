@@ -53,6 +53,7 @@ export function IssueCard({ issue }: IssueCardProps) {
             <span>By {issue.repository.owner}</span>
           </div>
         </div>
+        {/*BODY : description*/}
         <div className="mt-3 text-sm text-slate-400 opacity-0 max-h-0 overflow-hidden group-hover:opacity-100 group-hover:max-h-40 transition-all duration-300 ">
           {issue.body ? <ReactMarkdown>{issue.body}</ReactMarkdown> : 'No description provided.'}
         </div>
