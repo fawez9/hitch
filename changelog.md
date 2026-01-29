@@ -29,13 +29,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Keyword-based search for GitHub issues
 - Issue descriptions displayed on hover
 - Display number of comments for each issue
 
 ### Changed
 
-- N/A
+- Keyword-based search for GitHub issues
 
 ### Fixed
 
