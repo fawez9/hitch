@@ -24,3 +24,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - N/A
+
+## [1.0.1] – 2026-01-29
+
+### Added
+
+- Keyword-based search for GitHub issues
+- Issue descriptions displayed on hover
+- Display number of comments for each issue
+
+### Changed
+
+- N/A
+
+### Fixed
+
+- N/A
