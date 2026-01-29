@@ -10,6 +10,7 @@ describe('issuesMapper', () => {
         title: 'Test issue',
         html_url: 'https://github.com/test/repo/issues/1',
         labels: [{ name: 'good first issue' }],
+        body: 'this is the description of the issue',
         repository_url: 'https://api.github.com/repos/test/repo',
         comments: 0,
         created_at: '2024-01-01T00:00:00Z',
@@ -31,7 +32,9 @@ describe('issuesMapper', () => {
         language: null,
       },
       labels: ['good first issue'],
+      body: 'this is the description of the issue',
       createdAt: 'opened 2y ago',
+      comments: 0,
       updatedAt: '2024-01-02T00:00:00Z',
       difficulty: 'Beginner',
     });
