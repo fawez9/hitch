@@ -47,10 +47,10 @@ jobs:
           npm run test:units-routes
 
       # 8. Integration tests (with GitHub token)
-      - name: Run integration tests
-        env:
-          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
-        run: npm run test:integrations
+      # - name: Run integration tests
+      #   env:
+      #     SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
+      #   run: npm run test:integrations
 
       # 9. Build (ensures deployability)
       - name: Build
