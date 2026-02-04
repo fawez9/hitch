@@ -10,7 +10,7 @@ import { useIssueSearch } from '@/hooks/useIssueSearch';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 import { Pagination } from '@/components/Pagination';
-import { IssueLabel } from '@/ui/filterView';
+import { IssueLabel, LANGUAGE_MAP } from '@/ui/filterView';
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -19,7 +19,7 @@ export default function Home() {
 
   // Read state from URL (single source of truth)
   const keyword = searchParams.get('q') ?? '';
-  const language = searchParams.get('language') || undefined;
+  const language = searchParams.get('language') || 'alllanguages';
   const labelsParam = searchParams.get('labels');
   const updatedAt = searchParams.get('updatedAt') || undefined;
   const pageParam = searchParams.get('page');
@@ -34,9 +34,7 @@ export default function Home() {
 
   // Derive selected labels and language from URL
   const selectedLabels: IssueLabel[] = labelsParam ? (labelsParam.split(',') as IssueLabel[]) : [];
-  const selectedLanguage = language
-    ? language.charAt(0).toUpperCase() + language.slice(1)
-    : 'All Languages';
+  const selectedLanguage = language ? LANGUAGE_MAP[language] || language : 'All Languages';
 
   // Trigger search when URL params change (not local searchQuery state)
   useEffect(() => {
@@ -125,6 +123,7 @@ export default function Home() {
             selectedLabels={selectedLabels}
             onToggleLabel={handleToggleLabel}
             selectedLanguage={selectedLanguage}
+            selectedLanguageKey={language}
             onSelectLanguage={handleSelectLanguage}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}

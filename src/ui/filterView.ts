@@ -21,18 +21,18 @@ export const labelStyles: Record<IssueLabel, string> = {
     'hover:bg-purple-500 hover:border-purple-500 hover:text-white data-[active=true]:bg-purple-500 data-[active=true]:border-purple-500 data-[active=true]:text-white border-purple-500/30 text-purple-400',
 };
 
-export const languages = [
-  'All Languages',
-  'JavaScript',
-  'TypeScript',
-  'Python',
-  'Rust',
-  'Go',
-  'Java',
-  'Dart',
-  'Shell',
-  'C++',
-  'C',
-  'C#',
-  'PHP',
-];
+export const LANGUAGE_MAP: Record<string, string> = {
+  alllanguages: 'All Languages',
+  javascript: 'JavaScript',
+  typescript: 'TypeScript',
+  python: 'Python',
+  rust: 'Rust',
+  go: 'Go',
+  java: 'Java',
+  dart: 'Dart',
+  shell: 'Shell',
+  cpp: 'C++',
+  c: 'C',
+  csharp: 'C#',
+  php: 'PHP',
+};

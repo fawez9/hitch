@@ -1,12 +1,13 @@
 'use client';
 
-import { IssueLabel, labels, labelStyles, languages } from '@/ui/filterView';
+import { IssueLabel, labels, labelStyles, LANGUAGE_MAP } from '@/ui/filterView';
 import { Search, X } from 'lucide-react';
 
 interface FilterPanelProps {
   selectedLabels: IssueLabel[];
   onToggleLabel: (label: IssueLabel) => void;
   selectedLanguage: string;
+  selectedLanguageKey: string;
   onSelectLanguage: (lang: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
@@ -18,6 +19,7 @@ export function FilterPanel({
   selectedLabels,
   onToggleLabel,
   selectedLanguage,
+  selectedLanguageKey,
   onSelectLanguage,
   searchQuery,
   onSearchChange,
@@ -62,16 +64,17 @@ export function FilterPanel({
           {/* Language selector */}
           <div className="relative min-w-50">
             <select
-              value={selectedLanguage}
+              value={selectedLanguageKey}
               onChange={(e) => onSelectLanguage(e.target.value)}
               className="w-full appearance-none bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-4 py-3 pr-8 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all cursor-pointer"
             >
-              {languages.map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
+              {Object.entries(LANGUAGE_MAP).map(([key, label]) => (
+                <option key={key} value={key}>
+                  {label}
                 </option>
               ))}
             </select>
+
             <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
               <svg
                 width="12"
