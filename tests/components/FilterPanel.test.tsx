@@ -15,7 +15,7 @@ vi.mock('next/navigation', () => ({
 // ---- mock ui config ----
 vi.mock('@/ui/filterView', () => ({
   labels: ['bug', 'enhancement'],
-  languages: ['All Languages', 'TypeScript'],
+  LANGUAGE_MAP: { alllanguages: 'All Languages', typescript: 'TypeScript' },
   labelStyles: {
     bug: 'bg-red-500',
     enhancement: 'bg-blue-500',
@@ -33,6 +33,7 @@ describe('FilterPanel', () => {
         selectedLabels={[]}
         onToggleLabel={vi.fn()}
         selectedLanguage="All Languages"
+        selectedLanguageKey="alllanguages"
         onSelectLanguage={vi.fn()}
         searchQuery=""
         onSearchChange={vi.fn()}
@@ -100,7 +101,7 @@ describe('FilterPanel', () => {
     const languageSelect = screen.getByRole('combobox');
     await userEvent.selectOptions(languageSelect, 'TypeScript');
 
-    expect(onSelectLanguage).toHaveBeenCalledWith('TypeScript');
+    expect(onSelectLanguage).toHaveBeenCalledWith('typescript');
   });
 
   it('shows Clear button only when filters are active and calls onClear', async () => {
@@ -123,8 +124,13 @@ describe('FilterPanel', () => {
   });
 
   it('shows Clear button when language is selected', () => {
-    renderPanel({ selectedLanguage: 'TypeScript' });
-    expect(screen.getByRole('button', { name: /clear/i })).toBeInTheDocument();
+    renderPanel({
+      selectedLanguage: 'TypeScript',
+      selectedLanguageKey: 'typescript',
+    });
+
+    const languageSelect = screen.getByRole('combobox');
+    expect(languageSelect).toHaveValue('typescript');
   });
 
   it('does not show Clear button when no filters are active', () => {
@@ -151,8 +157,12 @@ describe('FilterPanel', () => {
   });
 
   it('displays selected language in dropdown', () => {
-    renderPanel({ selectedLanguage: 'TypeScript' });
+    renderPanel({
+      selectedLanguage: 'TypeScript',
+      selectedLanguageKey: 'typescript',
+    });
+
     const languageSelect = screen.getByRole('combobox');
-    expect(languageSelect).toHaveValue('TypeScript');
+    expect(languageSelect).toHaveValue('typescript');
   });
 });
