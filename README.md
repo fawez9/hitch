@@ -11,7 +11,7 @@
 
 ---
 
-## ✨ What is HITCH  ?
+## ✨ What is HITCH ?
 
 Finding the right issue to work on shouldn't be the hardest part of contributing to open source. Hitch cuts through the noise by letting you filter GitHub issues by programming language, labels (like "good first issue" or "bug"), and keywords—all with lightning-fast client-side filtering.
 
